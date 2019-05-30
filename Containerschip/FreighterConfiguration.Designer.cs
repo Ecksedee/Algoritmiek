@@ -38,14 +38,11 @@
             this.nudHeightInContainers = new System.Windows.Forms.NumericUpDown();
             this.nudLoadCapacity = new System.Windows.Forms.NumericUpDown();
             this.btnSet = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rtxLog = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudLengthInContainers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidthInContainers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeightInContainers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLoadCapacity)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -61,7 +58,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(270, 254);
+            this.groupBox1.Size = new System.Drawing.Size(272, 255);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuration";
@@ -171,32 +168,12 @@
             this.btnSet.UseVisualStyleBackColor = true;
             this.btnSet.Click += new System.EventHandler(this.BtnSet_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rtxLog);
-            this.groupBox2.Location = new System.Drawing.Point(288, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(270, 119);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Log";
-            // 
-            // rtxLog
-            // 
-            this.rtxLog.ForeColor = System.Drawing.Color.Red;
-            this.rtxLog.Location = new System.Drawing.Point(6, 19);
-            this.rtxLog.Name = "rtxLog";
-            this.rtxLog.Size = new System.Drawing.Size(258, 91);
-            this.rtxLog.TabIndex = 12;
-            this.rtxLog.Text = "";
-            // 
             // FreighterConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(573, 278);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(296, 279);
             this.Controls.Add(this.groupBox1);
             this.Name = "FreighterConfiguration";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -207,7 +184,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudWidthInContainers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeightInContainers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLoadCapacity)).EndInit();
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -224,7 +200,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RichTextBox rtxLog;
     }
 }

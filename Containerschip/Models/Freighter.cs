@@ -8,24 +8,24 @@ namespace Containerschip.Models
 {
     public class Freighter
     {
-        public int LengthInContainers { get; private set; }
-        public int WidthInContainers { get; private set; }
-        public int HeightInContainers { get; private set; }
-        public int LoadCapacity { get; private set; }
-        public double MinimumWeight { get; private set; }
-        public int MaximumWeight { get; private set; }
-        public Container[,,] ContainerGrid { get; private set; }
-
         public Freighter(int lengthInContainers, int widthInContainers, int heightInCointainers, int loadCapacity)
         {
-            LengthInContainers = lengthInContainers;
-            WidthInContainers = widthInContainers;
-            HeightInContainers = heightInCointainers;
+            Length = lengthInContainers;
+            Width = widthInContainers;
+            Height = heightInCointainers;
             LoadCapacity = loadCapacity;
-            ContainerGrid = new Container[lengthInContainers, widthInContainers, heightInCointainers];
+            Containers = new Container[lengthInContainers, widthInContainers, heightInCointainers];
             MinimumWeight = CalculateMinimumWeight();
             MaximumWeight = CalculateMaximumWeight();
         }
+
+        public int Length { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public int LoadCapacity { get; private set; }
+        public double MinimumWeight { get; private set; }
+        public int MaximumWeight { get; private set; }
+        public Container[,,] Containers { get; private set; }
 
         /// <summary>
         /// Calculates the minimum weight of the freighter.
@@ -42,7 +42,7 @@ namespace Containerschip.Models
         /// <returns></returns>
         private int CalculateMaximumWeight()
         {
-            return LengthInContainers * WidthInContainers * HeightInContainers * Container.MaximumWeight;
+            return Length * Width * Height * Container.MaximumWeight;
         }
 
         /// <summary>
@@ -51,13 +51,23 @@ namespace Containerschip.Models
         /// <param name="maximumFreighterWeight"></param>
         /// <param name="FreighterLoadCapacity"></param>
         /// <returns></returns>
-        public static bool CapacityExceedsMaxWeight(int maximumFreighterWeight, int freighterLoadCapacity)
+        public static bool WeightExceedsMaxWeight(int maximumFreighterWeight, int totalContainersWeight)
         {
-            if (freighterLoadCapacity > maximumFreighterWeight)
+            if (totalContainersWeight > maximumFreighterWeight)
             {
-                return true;
+                throw new ArgumentException("The total weight of the containers exceeds the maximum weight of the ship of " + maximumFreighterWeight + "Kg");
             }
             return false;
+            
+        }
+
+        public static bool WeightExceedsCapacity(int freighterLoadCapacity, int totalContainersWeight)
+        {
+            if (totalContainersWeight > freighterLoadCapacity)
+            {
+                return false;
+            }
+            throw new ArgumentException("The total weight of the containers exceeds the maximum load capacity of the ship of " + freighterLoadCapacity + "Kg");
         }
     }
 }

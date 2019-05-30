@@ -59,10 +59,14 @@
     <Compile Include="FreighterConfiguration.Designer.cs">
       <DependentUpon>FreighterConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="FreighterVisual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FreighterVisual.Designer.cs">
+      <DependentUpon>FreighterVisual.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Container.cs" />
-    <Compile Include="Models\CooledContainer.cs" />
     <Compile Include="Models\Freighter.cs" />
-    <Compile Include="Models\ValuableContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ContainerConfiguration.resx">

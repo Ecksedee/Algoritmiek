@@ -1,12 +1,5 @@
 ﻿using Containerschip.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Containerschip
@@ -31,15 +24,21 @@ namespace Containerschip
 
                 freighter = new Freighter(lengthInContainers, widthInContainers, heightInContainers, loadCapacity);
 
-                if (Freighter.CapacityExceedsMaxWeight(freighter.MaximumWeight, loadCapacity))
-                {
-                    throw new ArgumentException("The load capacity exceeds the maximum amount of weight.");
-                }
+                OpenContainerConfiguration();
             }
-            catch (ArgumentException exc)
+            catch (Exception exc)
             {
-                rtxLog.Text = exc.Message;
+                Console.WriteLine(exc.Message);
+                MessageBox.Show("Something went wrong creating the freighter.");
             }
+        }
+
+        private void OpenContainerConfiguration()
+        {
+            this.Hide();
+            ContainerConfiguration containerConfig = new ContainerConfiguration(freighter);
+            containerConfig.ShowDialog();
+            this.Close();
         }
     }
 }
