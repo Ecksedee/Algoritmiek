@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Containerschip.Models
 {
-    class CooledContainer
+    class CooledContainer : Container
     {
+
     }
 }

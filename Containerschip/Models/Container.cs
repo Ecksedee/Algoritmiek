@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Containerschip.Models
 {
-    class Container
+    public class Container
     {
+        public const int MaximumWeight = 30000;
+        public int Weight { get; private set; }
     }
 }
