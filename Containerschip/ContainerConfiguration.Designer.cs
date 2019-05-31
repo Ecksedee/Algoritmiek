@@ -40,6 +40,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstContainers = new System.Windows.Forms.ListBox();
             this.btnStartSorting = new System.Windows.Forms.Button();
+            this.btnRemoveContainer = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudContainerWeight)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -155,10 +156,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnRemoveContainer);
             this.groupBox3.Controls.Add(this.lstContainers);
             this.groupBox3.Location = new System.Drawing.Point(268, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(243, 257);
+            this.groupBox3.Size = new System.Drawing.Size(243, 197);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Containers";
@@ -168,7 +170,7 @@
             this.lstContainers.FormattingEnabled = true;
             this.lstContainers.Location = new System.Drawing.Point(6, 19);
             this.lstContainers.Name = "lstContainers";
-            this.lstContainers.Size = new System.Drawing.Size(231, 225);
+            this.lstContainers.Size = new System.Drawing.Size(231, 134);
             this.lstContainers.TabIndex = 0;
             // 
             // btnStartSorting
@@ -178,9 +180,20 @@
             this.btnStartSorting.Name = "btnStartSorting";
             this.btnStartSorting.Size = new System.Drawing.Size(93, 37);
             this.btnStartSorting.TabIndex = 15;
-            this.btnStartSorting.Text = "Begin sorting";
+            this.btnStartSorting.Text = "Begin Sorting";
             this.btnStartSorting.UseVisualStyleBackColor = true;
             this.btnStartSorting.Click += new System.EventHandler(this.BtnStartSorting_Click);
+            // 
+            // btnRemoveContainer
+            // 
+            this.btnRemoveContainer.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.btnRemoveContainer.Location = new System.Drawing.Point(68, 159);
+            this.btnRemoveContainer.Name = "btnRemoveContainer";
+            this.btnRemoveContainer.Size = new System.Drawing.Size(105, 31);
+            this.btnRemoveContainer.TabIndex = 16;
+            this.btnRemoveContainer.Text = "Remove Container";
+            this.btnRemoveContainer.UseVisualStyleBackColor = true;
+            this.btnRemoveContainer.Click += new System.EventHandler(this.BtnRemoveContainer_Click);
             // 
             // ContainerConfiguration
             // 
@@ -218,5 +231,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnStartSorting;
         private System.Windows.Forms.ListBox lstContainers;
+        private System.Windows.Forms.Button btnRemoveContainer;
     }
 }

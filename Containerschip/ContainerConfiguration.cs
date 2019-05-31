@@ -41,7 +41,7 @@ namespace Containerschip
                 unsortedContainers = unsortedContainers.OrderBy(x => x.Type).ThenByDescending(o => o.Weight).ToList();
                 lstContainers.Items.AddRange(unsortedContainers.ToArray());
                 rtxLog.ForeColor = Color.Green;
-                rtxLog.Text = "Container added!";
+                rtxLog.Text = "Container added.";
             }
             catch (Exception exc)
             {
@@ -55,8 +55,7 @@ namespace Containerschip
         {
             try
             {
-                Freighter.WeightExceedsMaxWeight(freighter.MaximumWeight, TotalContainersWeight());
-                Freighter.WeightExceedsCapacity(freighter.MaximumWeight, TotalContainersWeight());
+                Freighter.WeightFailsLimits(freighter.MaximumWeight, freighter.MinimumWeight, freighter.LoadCapacity, TotalContainersWeight());
 
                 OpenFreighterVisual();
             }
@@ -68,23 +67,41 @@ namespace Containerschip
             }
         }
 
-        private void OpenFreighterVisual()
+        private void BtnRemoveContainer_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            FreighterVisual freighter1 = new FreighterVisual(freighter);
-            freighter1.ShowDialog();
-            this.Close();
+            try
+            {
+                //TODO:
+                // Container uit listbox en unsortedContainers verwijderen en listbox updaten
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+                MessageBox.Show("Something went wrong removing the container.");
+            }
         }
 
+        private void OpenFreighterVisual()
+        {
+            rtxLog.ForeColor = Color.Green;
+            rtxLog.Text = "Sorting the containers...";
+
+            //TODO:
+            // Algoritme aanroepen en freighter meesturen
+
+            //this.Hide();
+            //FreighterVisual freighter1 = new FreighterVisual(freighter);
+            //freighter1.ShowDialog();
+            //this.Close();
+        }
+
+        /// <summary>
+        /// Calculates the total weight of all the containers combined
+        /// </summary>
+        /// <returns></returns>
         private int TotalContainersWeight()
         {
-            int totalContainersWeight = 0;
-
-            foreach (var container in unsortedContainers)
-            {
-                totalContainersWeight += container.Weight;
-            }
-            return totalContainersWeight;
+            return unsortedContainers.Sum(x => x.Weight);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Containerschip.Models
 {
-    class Algorithm
+    public class Algorithm
     {
         private readonly Freighter freighter;
 
-        public Algorithm(int lengthInContainers, int widthInContainers, int heightInContainers, int loadCapacity)
+        public Algorithm(Freighter freighter)
         {
-            freighter = new Freighter(lengthInContainers, widthInContainers, heightInContainers, loadCapacity);
+            this.freighter = freighter;
         }
 
         public List<Container> OrderByWeight(List<Container> containers)
@@ -20,7 +21,7 @@ namespace Containerschip.Models
             return containers.OrderBy(x => x.Weight).ToList();
         }
 
-        public void Sort(List<Container> unsortedContainers)
+        public Container[,,] Sort(List<Container> unsortedContainers)
         {
             for(int heightCount = 0; heightCount < freighter.Height; heightCount++)
             {
@@ -40,15 +41,16 @@ namespace Containerschip.Models
                     else
                     {
                         reverse = false;
-                        for(int widthCount = freighter.Width; widthCount > 0; widthCount++)
+                        for(int widthCount = freighter.Width; widthCount > 0; widthCount--)
                         {
                             int count = unsortedContainers.Count;
                             freighter.Containers[heightCount, lengthCount, widthCount - 1] = unsortedContainers[count - 1];
-                            unsortedContainers.RemoveAt(count - 1);
+                            unsortedContainers.RemoveAt(count - 1); //ERROR 404 PORN NOT FOUND >:( Wat?
                         }
                     }
                 }
             }
+            return freighter.Containers;
         }
     }
 }

@@ -46,28 +46,28 @@ namespace Containerschip.Models
         }
 
         /// <summary>
-        /// Returns a boolean whether the load capacity of the freighter exceeds the maximimum weight.
+        /// Returns a boolean whether the entered parameters exceed the limits of the freighter and returns the corresponding error.
         /// </summary>
         /// <param name="maximumFreighterWeight"></param>
-        /// <param name="FreighterLoadCapacity"></param>
+        /// <param name="miminumFreighterWeight"></param>
+        /// <param name="freighterLoadCapacity"></param>
+        /// <param name="totalContainersWeight"></param>
         /// <returns></returns>
-        public static bool WeightExceedsMaxWeight(int maximumFreighterWeight, int totalContainersWeight)
-        {
-            if (totalContainersWeight > maximumFreighterWeight)
-            {
-                throw new ArgumentException("The total weight of the containers exceeds the maximum weight of the ship of " + maximumFreighterWeight + "Kg");
-            }
-            return false;
-            
-        }
-
-        public static bool WeightExceedsCapacity(int freighterLoadCapacity, int totalContainersWeight)
+        public static bool WeightFailsLimits(int maximumFreighterWeight, double miminumFreighterWeight, int freighterLoadCapacity,  int totalContainersWeight)
         {
             if (totalContainersWeight > freighterLoadCapacity)
             {
-                return false;
+                throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum load capacity of the freighter of {1} Kg", totalContainersWeight, freighterLoadCapacity));
             }
-            throw new ArgumentException("The total weight of the containers exceeds the maximum load capacity of the ship of " + freighterLoadCapacity + "Kg");
+            else if (totalContainersWeight > maximumFreighterWeight)
+            {
+                throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum weight of the freighter of {1} Kg", totalContainersWeight, maximumFreighterWeight));
+            }
+            else if (totalContainersWeight < miminumFreighterWeight )
+            {
+                throw new ArgumentException(String.Format("The current weight: {0} kg fails to reach the minimum amount of {1} kg required.", totalContainersWeight, miminumFreighterWeight));
+            }
+            return false;
         }
     }
 }
