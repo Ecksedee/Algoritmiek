@@ -301,8 +301,8 @@ namespace ContainervervoerTest
             Assert.AreEqual(-1, freighter.GetNextAvailableSpot(1, 0, false));
         }
 
-        //[TestMethod]
-        public void Sort_WhenContainersGiven_ShouldSortStandardContainers()
+        [TestMethod]
+        public void Sort_WhenContainersGiven_ShouldSortContainers()
         {
             // Arrange
             int freighterLength = 5;
@@ -310,22 +310,83 @@ namespace ContainervervoerTest
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
             Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
-            List<Container> unsortedContainer = new List<Container>();
-            for (int i = 1; i < 10; i++)
-            {
-                unsortedContainer.Add(new Container(i, Containerschip.Models.Type.Standard));
-            }
-            var cooledType = Containerschip.Models.Type.Standard;
+            List<Container> unsortedContainers = new List<Container>();
+            var cooled = Containerschip.Models.Type.Standard;
+            var standard = Containerschip.Models.Type.Standard;
 
-            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(1, cooledType), new Container(6, cooledType), null }, { new Container(3, cooledType), new Container(8, cooledType), null }, { new Container(5, cooledType), new Container(10, cooledType), null }, { new Container(4, cooledType), new Container(9, cooledType), null }, { new Container(2, cooledType), new Container(7, cooledType), null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, {null, null, null } } };
+            for (int i = 1; i < 23; i++)
+            {
+                unsortedContainers.Add(new Container(i, standard));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3]
+            {
+                {
+                    {
+                        new Container(15, cooled), new Container(9, cooled), new Container(5, cooled)
+                    },
+                    {
+                        new Container(13, cooled), new Container(7, cooled), new Container(3, cooled)
+                    },
+                    {
+                        new Container(11, cooled), new Container(6, cooled), new Container(1, cooled)
+                    },
+                    {
+                        new Container(12, cooled), new Container(8, cooled), new Container(2, cooled)
+                    },
+                    {
+                        new Container(14, cooled), new Container(10, cooled), new Container(4, cooled)
+                    }
+                },
+                {
+                    { new Container(21, standard), new Container(2, standard), null },
+                    { new Container(19, standard), null, null },
+                    { new Container(18, standard), null, null },
+                    { new Container(20, standard), null, null },
+                    { new Container(22, standard), new Container(1, standard), null }
+                },
+                {
+                    { new Container(17, standard), null, null },
+                    { new Container(15, standard), null, null },
+                    { new Container(13, standard), null, null },
+                    { new Container(14, standard), null, null },
+                    { new Container(16, standard), null, null }
+                },
+                {
+                    { new Container(11, standard), null, null },
+                    { new Container(9, standard), null, null },
+                    { new Container(8, standard), null, null },
+                    { new Container(10, standard), null, null },
+                    { new Container(12, standard), null, null }
+                },
+                {
+                    { new Container(7, standard), null, null },
+                    { new Container(5, standard), null, null },
+                    { new Container(3, standard), null, null },
+                    { new Container(4, standard), null, null },
+                    { new Container(6, standard), null, null }
+                }
+            };
 
             Algorithm algorithm = new Algorithm(freighter);
 
             // Act
-            algorithm.Sort(unsortedContainer);
+            Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
 
             // Assert
-            Assert.AreEqual(expectedContainersSorted, freighter.Containers);
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, expectedArrayToString);
         }
     }
 }

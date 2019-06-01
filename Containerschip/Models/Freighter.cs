@@ -138,7 +138,7 @@ namespace Containerschip.Models
 
                 if (x > (Containers.GetLength(0) - 1) - x) //We zijn over het midden heen we kunnen stoppen
                 {
-                    break;
+                    return -1;
                 }
             }
 
