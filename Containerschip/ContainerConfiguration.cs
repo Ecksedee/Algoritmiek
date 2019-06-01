@@ -53,7 +53,8 @@ namespace Containerschip
         {
             try
             {
-                Freighter.WeightFailsLimits(freighter.MaximumWeight, freighter.MinimumWeight, freighter.LoadCapacity, TotalContainersWeight());
+                freighter.WeightFailsLimits(unsortedContainers);
+                freighter.CooledContainersExceedsMaximum(unsortedContainers);
                 OpenFreighterVisual();
             }
             catch (ArgumentException exc)
@@ -91,7 +92,7 @@ namespace Containerschip
             rtxLog.ForeColor = Color.Green;
             rtxLog.Text = "Sorting the containers...";
 
-            if (Freighter.CapacityExceedsWeightLimit(freighter.MaximumWeight, freighter.LoadCapacity))
+            if (freighter.CapacityExceedsWeightLimit())
             {
                 freighter.LoadCapacity = freighter.MaximumWeight;
             }

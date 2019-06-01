@@ -48,6 +48,14 @@ namespace Containerschip.Models
         }
 
         /// <summary>
+        /// Returns the amount of cooled containers the ship can carry
+        /// </summary>
+        private int MaxAmountOfCooledContainers()
+        {
+            return Width * Height;
+        }
+
+        /// <summary>
         /// Returns a boolean whether the entered parameters exceed the limits of the freighter and returns the corresponding error.
         /// </summary>
         /// <param name="maximumFreighterWeight"></param>
@@ -55,19 +63,22 @@ namespace Containerschip.Models
         /// <param name="freighterLoadCapacity"></param>
         /// <param name="totalContainersWeight"></param>
         /// <returns></returns>
-        public static bool WeightFailsLimits(int maximumFreighterWeight, double miminumFreighterWeight, int freighterLoadCapacity,  int totalContainersWeight)
+        public bool WeightFailsLimits(List<Container> _containers)
         {
-            if (totalContainersWeight > freighterLoadCapacity)
+            List<Container> containers = _containers;
+            int totalContainersWeight = containers.Sum(x => x.Weight);
+
+            if (totalContainersWeight > LoadCapacity)
             {
-                throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum load capacity of the freighter of {1} Kg", totalContainersWeight, freighterLoadCapacity));
+                throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum load capacity of the freighter of {1} Kg", totalContainersWeight, LoadCapacity));
             }
-            else if (totalContainersWeight > maximumFreighterWeight)
+            else if (totalContainersWeight > MaximumWeight)
             {
-                throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum weight of the freighter of {1} Kg", totalContainersWeight, maximumFreighterWeight));
+                throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum weight of the freighter of {1} Kg", totalContainersWeight, MaximumWeight));
             }
-            else if (totalContainersWeight < miminumFreighterWeight )
+            else if (totalContainersWeight < MinimumWeight )
             {
-                throw new ArgumentException(String.Format("The current weight: {0} kg fails to reach the minimum amount of {1} kg required.", totalContainersWeight, miminumFreighterWeight));
+                throw new ArgumentException(String.Format("The current weight: {0} kg fails to reach the minimum amount of {1} kg required.", totalContainersWeight, MinimumWeight));
             }
             return false;
         }
@@ -78,31 +89,24 @@ namespace Containerschip.Models
         /// <param name="maximumFreighterweight"></param>
         /// <param name="freighterLoadCapacity"></param>
         /// <returns></returns>
-        public static bool CapacityExceedsWeightLimit(int maximumFreighterweight, int freighterLoadCapacity)
+        public bool CapacityExceedsWeightLimit()
         {
-            if (freighterLoadCapacity > maximumFreighterweight)
+            if (LoadCapacity > MaximumWeight)
             {
                 return true;
             }
             return false;
         }
 
-        //public int NextAvailableSpot(int length, int height)
-        //{
-        //    for (int x = 0; x < Containers.GetLength(0); x++)
-        //    {
-        //        if (Containers[x] == 1)
-        //        {
-        //            if (Containers[(Containers.GetLength(0) - 1) - x] == 0)
-        //            {
-        //                return (Containers.GetLength(0) - 1) - x;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return x;
-        //        }
-        //    }
-        //}
+        public bool CooledContainersExceedsMaximum(List<Container> containers)
+        {
+            List<Container> cooledContainers = containers.Where(x => x.Type == Type.Cooled).ToList();
+
+            if (cooledContainers.Count > MaxAmountOfCooledContainers())
+            {
+                throw new ArgumentException(String.Format("The current amount of cooled containers: {0} exceeds the maximum amount of {1} containers.", cooledContainers.Count, MaxAmountOfCooledContainers()));
+            }
+            return false;
+        }
     }
 }

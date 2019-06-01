@@ -42,11 +42,18 @@ namespace Containerschip.Models
 
                 if (containernumber >= cooledContainers.Count)
                 {
+                    Console.WriteLine("No more containers, ending sorting");
                     break;
                 }
 
                 for (int x = 0; x < freighter.Containers.GetLength(0); x++) // Voor elk vak in de breedte
                 {
+                    if (containernumber >= cooledContainers.Count)
+                    {
+                        Console.WriteLine("No more containers, ending sorting");
+                        break;
+                    }
+
                     freighter.Containers[width, 0, height] = cooledContainers[containernumber];
 
                     if (countUp)
