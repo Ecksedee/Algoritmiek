@@ -10,7 +10,7 @@ namespace ContainervervoerTest
     public class FreighterTest
     {
         [TestMethod]
-        public void WeightExceedsLimitst_WhenWeightDoesNotExceed_ReturnFalse()
+        public void WeightExceedsLimits_WhenWeightDoesNotExceed_ReturnFalse()
         {
             // Arrange
             int freighterLength = 5;
@@ -25,10 +25,8 @@ namespace ContainervervoerTest
                 unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
             }
 
-            int totalContainerWeight = unsortedContainers.Sum(x => x.Weight);
-
             // Act 
-            bool result = Freighter.WeightFailsLimits(freighter.MaximumWeight, freighter.MinimumWeight, freighter.LoadCapacity, totalContainerWeight);
+            bool result = freighter.WeightFailsLimits(unsortedContainers);
 
             // Assert
             Assert.IsFalse(result);
@@ -55,7 +53,7 @@ namespace ContainervervoerTest
             // Act
             try
             {
-                Freighter.WeightFailsLimits(freighter.MaximumWeight, freighter.MinimumWeight, freighter.LoadCapacity, totalContainerWeight);
+                freighter.WeightFailsLimits(unsortedContainers);
             }
             catch (ArgumentException exc)
             {
@@ -86,7 +84,7 @@ namespace ContainervervoerTest
             // Act
             try
             {
-                Freighter.WeightFailsLimits(freighter.MaximumWeight, freighter.MinimumWeight, freighter.LoadCapacity, totalContainerWeight);
+                freighter.WeightFailsLimits(unsortedContainers);
             }
             catch (ArgumentException exc)
             {
@@ -119,10 +117,14 @@ namespace ContainervervoerTest
             unsortedCooledContainer.Add(new Container(8, cooled));
             unsortedCooledContainer.Add(new Container(9, cooled));
             unsortedCooledContainer.Add(new Container(10, cooled));
+            unsortedCooledContainer.Add(new Container(11, cooled));
+            unsortedCooledContainer.Add(new Container(12, cooled));
+            unsortedCooledContainer.Add(new Container(13, cooled));
+            unsortedCooledContainer.Add(new Container(14, cooled));
+            unsortedCooledContainer.Add(new Container(15, cooled));
 
-            unsortedCooledContainer.OrderByDescending(x => x.Weight);
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(15, cooled), new Container(10, cooled), new Container(5, cooled) }, { new Container(13, cooled), new Container(8, cooled), new Container(3, cooled) }, { new Container(11, cooled), new Container(6, cooled), new Container(1, cooled) }, { new Container(12, cooled), new Container(7, cooled), new Container(2, cooled) }, { new Container(14, cooled), new Container(9, cooled), new Container(4, cooled) } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } } };
 
-            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(1, cooled), new Container(6, cooled), null }, { new Container(3, cooled), new Container(8, cooled), null }, { new Container(5, cooled), new Container(10, cooled), null }, { new Container(4, cooled), new Container(9, cooled), null }, { new Container(2, cooled), new Container(7, cooled), null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } } };
             Algorithm algorithm = new Algorithm(freighter);
 
             // Act
@@ -143,6 +145,135 @@ namespace ContainervervoerTest
 
             Assert.AreEqual(expectedArrayToString, actualArrayToString);
         }
+
+        [TestMethod]
+        public void SortCooledContainers_WhenContainersWeightExceedsLimitOnTop_ShouldThrowArgument()
+        {
+            // Assert
+            int freighterLength = 5;
+            int freighterWidth = 3;
+            int freighterHeight = 10;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+
+            List<Container> unsortedCooledContainer = new List<Container>();
+            var cooled = Containerschip.Models.Type.Cooled;
+
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+            unsortedCooledContainer.Add(new Container(30000, cooled));
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            try
+            {
+                algorithm.SortCooledContainers(unsortedCooledContainer);
+            }
+            catch (ArgumentException exc)
+            {
+                // Assert
+
+                StringAssert.Contains(exc.Message, String.Format("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg"));
+            }
+        }
+
+        [TestMethod]
+        public void WeightOnTop_WhenPlaceGiven_ShouldReturnWeightOnTop()
+        {
+            // Assert
+            int freighterLength = 5;
+            int freighterWidth = 5;
+            int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+
+            List<Container> unsortedCooledContainer = new List<Container>();
+            var cooled = Containerschip.Models.Type.Cooled;
+
+            unsortedCooledContainer.Add(new Container(1, cooled));
+            unsortedCooledContainer.Add(new Container(2, cooled));
+            unsortedCooledContainer.Add(new Container(3, cooled));
+            unsortedCooledContainer.Add(new Container(4, cooled));
+            unsortedCooledContainer.Add(new Container(5, cooled));
+            unsortedCooledContainer.Add(new Container(6, cooled));
+            unsortedCooledContainer.Add(new Container(7, cooled));
+            unsortedCooledContainer.Add(new Container(8, cooled));
+            unsortedCooledContainer.Add(new Container(9, cooled));
+            unsortedCooledContainer.Add(new Container(10, cooled));
+            unsortedCooledContainer.Add(new Container(11, cooled));
+            unsortedCooledContainer.Add(new Container(12, cooled));
+            unsortedCooledContainer.Add(new Container(13, cooled));
+            unsortedCooledContainer.Add(new Container(14, cooled));
+            unsortedCooledContainer.Add(new Container(15, cooled));
+
+            Algorithm algorithm = new Algorithm(freighter);
+            int expectedResult = 15;
+
+            // Act
+
+            algorithm.SortCooledContainers(unsortedCooledContainer);
+            int actualResult = algorithm.WeightOnTopOfLowest(0, 0);
+
+            // Assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void WeightOnTop_WhenNotAllSpotsFilled_ShouldReturnWeightOnTop()
+        {
+            // Assert
+            int freighterLength = 5;
+            int freighterWidth = 5;
+            int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+
+            List<Container> unsortedCooledContainer = new List<Container>();
+            var cooled = Containerschip.Models.Type.Cooled;
+
+            unsortedCooledContainer.Add(new Container(1, cooled));
+            unsortedCooledContainer.Add(new Container(2, cooled));
+            unsortedCooledContainer.Add(new Container(3, cooled));
+            unsortedCooledContainer.Add(new Container(5, cooled));
+            unsortedCooledContainer.Add(new Container(6, cooled));
+            unsortedCooledContainer.Add(new Container(7, cooled));
+            unsortedCooledContainer.Add(new Container(8, cooled));
+            unsortedCooledContainer.Add(new Container(9, cooled));
+            unsortedCooledContainer.Add(new Container(10, cooled));
+            unsortedCooledContainer.Add(new Container(11, cooled));
+            unsortedCooledContainer.Add(new Container(12, cooled));
+            unsortedCooledContainer.Add(new Container(13, cooled));
+            unsortedCooledContainer.Add(new Container(14, cooled));
+            unsortedCooledContainer.Add(new Container(15, cooled));
+
+            Algorithm algorithm = new Algorithm(freighter);
+            int expectedResult = 6;
+
+            // Act
+
+            algorithm.SortCooledContainers(unsortedCooledContainer);
+            int actualResult = algorithm.WeightOnTopOfLowest(2, 0);
+
+            // Assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
 
         //[TestMethod]
         public void Sort_WhenContainersGiven_ShouldSortStandardContainers()

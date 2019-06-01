@@ -20,8 +20,7 @@ namespace Containerschip.Models
         public void Sort(List<Container> _unsortedList)
         {
             unsortedList = _unsortedList;
-            List<Container> cooledContainers = GetCooledContainersByWeight();
-
+            List<Container> cooledContainers = GetCooledContainers();
             SortCooledContainers(cooledContainers);
         }
 
@@ -31,6 +30,8 @@ namespace Containerschip.Models
         /// <param name="cooledContainers"></param>
         public Container[,,] SortCooledContainers(List<Container> cooledContainers)
         {
+            cooledContainers = SortContainersByWeight(cooledContainers);
+
             int containernumber = 0;
 
             for (int height = 0; height < freighter.Containers.GetLength(2); height++) // Voor elke laag
@@ -54,7 +55,14 @@ namespace Containerschip.Models
                         break;
                     }
 
-                    freighter.Containers[width, 0, height] = cooledContainers[containernumber];
+                    if (WeightOnTopOfLowest(width, 0) + cooledContainers[containernumber].Weight < Container.MaxWeightOnTop)
+                    {
+                        freighter.Containers[width, 0, height] = cooledContainers[containernumber];
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                    }
 
                     if (countUp)
                     {
@@ -75,45 +83,38 @@ namespace Containerschip.Models
             return freighter.Containers;
         }
 
+        public int WeightOnTopOfLowest(int width, int length)
+        {
+            int totalWeightOnTop = 0;
+
+            for (int height = 1; height < freighter.Containers.GetLength(2); height++)
+            {
+                Container container = freighter.Containers[width, length, height];
+
+                if (container == null)
+                {
+                    Console.WriteLine("No more containers on top");
+                    break;
+                }
+                totalWeightOnTop += freighter.Containers[width, length, height].Weight;
+            }
+
+            return totalWeightOnTop;
+        }
+
         /// <summary>
-        /// Returns all containers of type cooled sorted by weight
+        /// Returns all containers sorted by weight
         /// </summary>
         /// <returns></returns>
-        public List<Container> GetCooledContainersByWeight()
+        public List<Container> SortContainersByWeight(List<Container> containers)
         {
-            return unsortedList.Where(x => x.Type == Type.Cooled).OrderByDescending(x => x.Weight).ToList();
+            return containers.OrderByDescending(x => x.Weight).ToList();
+        }
+
+        private List<Container> GetCooledContainers()
+        {
+            return unsortedList.Where(x => x.Type == Type.Cooled).ToList();
         }
     }
 }
 
-//public Container[,,] Sort(List<Container> unsortedContainers)
-//{
-//    for(int heightCount = 0; heightCount < freighter.Height; heightCount++)
-//    {
-//        bool reverse = false;
-//        for(int lengthCount = 0; lengthCount < freighter.Length; lengthCount++)
-//        {
-//            if(!reverse)
-//            {
-//                reverse = true;
-//                for (int widthCount = 0; widthCount < freighter.Width; widthCount++)
-//                {
-//                    int count = unsortedContainers.Count;
-//                    freighter.Containers[heightCount, lengthCount, widthCount] = unsortedContainers[count - 1];
-//                    unsortedContainers.RemoveAt(count - 1);
-//                }
-//            }
-//            else
-//            {
-//                reverse = false;
-//                for(int widthCount = freighter.Width; widthCount > 0; widthCount--)
-//                {
-//                    int count = unsortedContainers.Count;
-//                    freighter.Containers[heightCount, lengthCount, widthCount - 1] = unsortedContainers[count - 1];
-//                    unsortedContainers.RemoveAt(count - 1); //ERROR 404 PORN NOT FOUND >:( Wat?
-//                }
-//            }
-//        }
-//    }
-//    return freighter.Containers;
-//}
