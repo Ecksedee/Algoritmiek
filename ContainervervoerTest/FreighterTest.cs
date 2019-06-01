@@ -242,7 +242,7 @@ namespace ContainervervoerTest
             int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -303,6 +303,91 @@ namespace ContainervervoerTest
 
         [TestMethod]
         public void Sort_WhenContainersGiven_ShouldSortContainers()
+        {
+            // Arrange
+            int freighterLength = 5;
+            int freighterWidth = 5;
+            int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var cooled = Containerschip.Models.Type.Standard;
+            var standard = Containerschip.Models.Type.Standard;
+
+            unsortedContainers.Add(new Container(1, cooled));
+            unsortedContainers.Add(new Container(2, cooled));
+            unsortedContainers.Add(new Container(3, cooled));
+            unsortedContainers.Add(new Container(4, cooled));
+            unsortedContainers.Add(new Container(5, cooled));
+            unsortedContainers.Add(new Container(6, cooled));
+
+            for (int i = 1; i < 25; i++)
+            {
+                unsortedContainers.Add(new Container(i, standard));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3]
+            {
+                {
+                    {new Container(6, cooled), new Container(1, cooled), null},
+                    {new Container(4, cooled), new Container(3, standard), null},
+                    {new Container(2, cooled), new Container(1, standard), null},
+                    {new Container(3, cooled), new Container(2, standard), null},
+                    {new Container(5, cooled), new Container(4, standard), null}
+                },
+                {
+                    { new Container(23, standard), null, null },
+                    { new Container(21, standard), null, null },
+                    { new Container(20, standard), null, null },
+                    { new Container(22, standard), null, null },
+                    { new Container(24, standard), null, null }
+                },
+                {
+                    { new Container(19, standard), null, null },
+                    { new Container(17, standard), null, null },
+                    { new Container(15, standard), null, null },
+                    { new Container(16, standard), null, null },
+                    { new Container(18, standard), null, null }
+                },
+                {
+                    { new Container(13, standard), null, null },
+                    { new Container(11, standard), null, null },
+                    { new Container(10, standard), null, null },
+                    { new Container(12, standard), null, null },
+                    { new Container(14, standard), null, null }
+                },
+                {
+                    { new Container(9, standard), null, null },
+                    { new Container(7, standard), null, null },
+                    { new Container(5, standard), null, null },
+                    { new Container(6, standard), null, null },
+                    { new Container(8, standard), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, expectedArrayToString);
+        }
+
+        [TestMethod]
+        public void Sort_WhenCooledContainersNotEntirelyFilled_ShouldSortStandardAtFront()
         {
             // Arrange
             int freighterLength = 5;
