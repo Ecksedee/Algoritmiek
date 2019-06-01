@@ -8,13 +8,15 @@ namespace Containerschip.Models
 {
     public class Freighter
     {
+        const int maxAmountOfStackedContainers = (Container.MaxWeightOnTop + Container.MaxWeight) / Container.MaxWeight; 
+
         public Freighter(int lengthInContainers, int widthInContainers, int heightInCointainers, int loadCapacity)
         {
             Length = lengthInContainers;
             Width = widthInContainers;
             Height = heightInCointainers;
             LoadCapacity = loadCapacity;
-            Containers = new Container[lengthInContainers, widthInContainers, heightInCointainers];
+            Containers = new Container[widthInContainers, lengthInContainers, heightInCointainers];
             MinimumWeight = CalculateMinimumWeight();
             MaximumWeight = CalculateMaximumWeight();
         }
@@ -22,7 +24,7 @@ namespace Containerschip.Models
         public int Length { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public int LoadCapacity { get; private set; }
+        public int LoadCapacity { get; set; }
         public double MinimumWeight { get; private set; }
         public int MaximumWeight { get; private set; }
         public Container[,,] Containers { get; private set; }
@@ -42,7 +44,7 @@ namespace Containerschip.Models
         /// <returns></returns>
         private int CalculateMaximumWeight()
         {
-            return Length * Width * Height * Container.MaximumWeight;
+            return Length * Width * Container.MaxWeight * maxAmountOfStackedContainers;
         }
 
         /// <summary>
@@ -69,5 +71,38 @@ namespace Containerschip.Models
             }
             return false;
         }
+
+        /// <summary>
+        /// Returns a boolean whether the load capacity exceeds the maximum weight of the ship
+        /// </summary>
+        /// <param name="maximumFreighterweight"></param>
+        /// <param name="freighterLoadCapacity"></param>
+        /// <returns></returns>
+        public static bool CapacityExceedsWeightLimit(int maximumFreighterweight, int freighterLoadCapacity)
+        {
+            if (freighterLoadCapacity > maximumFreighterweight)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //public int NextAvailableSpot(int length, int height)
+        //{
+        //    for (int x = 0; x < Containers.GetLength(0); x++)
+        //    {
+        //        if (Containers[x] == 1)
+        //        {
+        //            if (Containers[(Containers.GetLength(0) - 1) - x] == 0)
+        //            {
+        //                return (Containers.GetLength(0) - 1) - x;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return x;
+        //        }
+        //    }
+        //}
     }
 }

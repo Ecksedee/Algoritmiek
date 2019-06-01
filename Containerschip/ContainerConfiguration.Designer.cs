@@ -38,9 +38,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rtxLog = new System.Windows.Forms.RichTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnRemoveContainer = new System.Windows.Forms.Button();
             this.lstContainers = new System.Windows.Forms.ListBox();
             this.btnStartSorting = new System.Windows.Forms.Button();
-            this.btnRemoveContainer = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblTotalWeight = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudContainerWeight)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -156,6 +158,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lblTotalWeight);
+            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnRemoveContainer);
             this.groupBox3.Controls.Add(this.lstContainers);
             this.groupBox3.Location = new System.Drawing.Point(268, 12);
@@ -164,6 +168,17 @@
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Containers";
+            // 
+            // btnRemoveContainer
+            // 
+            this.btnRemoveContainer.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.btnRemoveContainer.Location = new System.Drawing.Point(132, 159);
+            this.btnRemoveContainer.Name = "btnRemoveContainer";
+            this.btnRemoveContainer.Size = new System.Drawing.Size(105, 31);
+            this.btnRemoveContainer.TabIndex = 16;
+            this.btnRemoveContainer.Text = "Remove Container";
+            this.btnRemoveContainer.UseVisualStyleBackColor = true;
+            this.btnRemoveContainer.Click += new System.EventHandler(this.BtnRemoveContainer_Click);
             // 
             // lstContainers
             // 
@@ -184,16 +199,23 @@
             this.btnStartSorting.UseVisualStyleBackColor = true;
             this.btnStartSorting.Click += new System.EventHandler(this.BtnStartSorting_Click);
             // 
-            // btnRemoveContainer
+            // label2
             // 
-            this.btnRemoveContainer.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.btnRemoveContainer.Location = new System.Drawing.Point(68, 159);
-            this.btnRemoveContainer.Name = "btnRemoveContainer";
-            this.btnRemoveContainer.Size = new System.Drawing.Size(105, 31);
-            this.btnRemoveContainer.TabIndex = 16;
-            this.btnRemoveContainer.Text = "Remove Container";
-            this.btnRemoveContainer.UseVisualStyleBackColor = true;
-            this.btnRemoveContainer.Click += new System.EventHandler(this.BtnRemoveContainer_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 168);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Total weight:";
+            // 
+            // lblTotalWeight
+            // 
+            this.lblTotalWeight.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lblTotalWeight.AutoSize = true;
+            this.lblTotalWeight.Location = new System.Drawing.Point(70, 168);
+            this.lblTotalWeight.Name = "lblTotalWeight";
+            this.lblTotalWeight.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalWeight.TabIndex = 18;
             // 
             // ContainerConfiguration
             // 
@@ -213,6 +235,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudContainerWeight)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -232,5 +255,7 @@
         private System.Windows.Forms.Button btnStartSorting;
         private System.Windows.Forms.ListBox lstContainers;
         private System.Windows.Forms.Button btnRemoveContainer;
+        private System.Windows.Forms.Label lblTotalWeight;
+        private System.Windows.Forms.Label label2;
     }
 }

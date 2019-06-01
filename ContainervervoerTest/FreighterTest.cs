@@ -22,7 +22,7 @@ namespace ContainervervoerTest
 
             for (int i = 0; i < 30; i++)
             {
-                unsortedContainers.Add(new Container(Container.MaximumWeight, Containerschip.Models.Type.Standard));
+                unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
             }
 
             int totalContainerWeight = unsortedContainers.Sum(x => x.Weight);
@@ -47,7 +47,7 @@ namespace ContainervervoerTest
 
             for (int i = 0; i < 31; i++)
             {
-                unsortedContainers.Add(new Container(Container.MaximumWeight, Containerschip.Models.Type.Standard));
+                unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
             }
 
             int totalContainerWeight = unsortedContainers.Sum(x => x.Weight);
@@ -78,7 +78,7 @@ namespace ContainervervoerTest
 
             for (int i = 0; i < 24; i++)
             {
-                unsortedContainers.Add(new Container(Container.MaximumWeight, Containerschip.Models.Type.Standard));
+                unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
             }
 
             int totalContainerWeight = unsortedContainers.Sum(x => x.Weight);
@@ -97,11 +97,59 @@ namespace ContainervervoerTest
         }
 
         [TestMethod]
+        public void SortCooledContainers_WhenContainersGiven_ShouldSortCooledContainers()
+        {
+            // Assert
+            int freighterLength = 5;
+            int freighterWidth = 5;
+            int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+
+            List<Container> unsortedCooledContainer = new List<Container>();
+            var cooled = Containerschip.Models.Type.Cooled;
+
+            unsortedCooledContainer.Add(new Container(1, cooled));
+            unsortedCooledContainer.Add(new Container(2, cooled));
+            unsortedCooledContainer.Add(new Container(3, cooled));
+            unsortedCooledContainer.Add(new Container(4, cooled));
+            unsortedCooledContainer.Add(new Container(5, cooled));
+            unsortedCooledContainer.Add(new Container(6, cooled));
+            unsortedCooledContainer.Add(new Container(7, cooled));
+            unsortedCooledContainer.Add(new Container(8, cooled));
+            unsortedCooledContainer.Add(new Container(9, cooled));
+            unsortedCooledContainer.Add(new Container(10, cooled));
+
+            unsortedCooledContainer.OrderByDescending(x => x.Weight);
+
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(1, cooled), new Container(6, cooled), null }, { new Container(3, cooled), new Container(8, cooled), null }, { new Container(5, cooled), new Container(10, cooled), null }, { new Container(4, cooled), new Container(9, cooled), null }, { new Container(2, cooled), new Container(7, cooled), null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } } };
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.SortCooledContainers(unsortedCooledContainer);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
+        }
+
+        //[TestMethod]
         public void Sort_WhenContainersGiven_ShouldSortStandardContainers()
         {
             // Arrange
             int freighterLength = 5;
-            int freighterWidth = 3;
+            int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
             Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
@@ -110,9 +158,9 @@ namespace ContainervervoerTest
             {
                 unsortedContainer.Add(new Container(i, Containerschip.Models.Type.Standard));
             }
-            var normaltype = Containerschip.Models.Type.Standard;
+            var cooledType = Containerschip.Models.Type.Standard;
 
-            Container[,,] expectedContainersSorted = new Container[1, 5, 2] { { { new Container(1, normaltype), new Container(2, normaltype) }, { new Container(4, normaltype), new Container(3, normaltype) }, { new Container(5, normaltype), new Container(6, normaltype) }, { new Container(7, normaltype), new Container(8, normaltype) }, { new Container(9, normaltype), new Container(10, normaltype) }, } };
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(1, cooledType), new Container(6, cooledType), null }, { new Container(3, cooledType), new Container(8, cooledType), null }, { new Container(5, cooledType), new Container(10, cooledType), null }, { new Container(4, cooledType), new Container(9, cooledType), null }, { new Container(2, cooledType), new Container(7, cooledType), null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, {null, null, null } } };
 
             Algorithm algorithm = new Algorithm(freighter);
 

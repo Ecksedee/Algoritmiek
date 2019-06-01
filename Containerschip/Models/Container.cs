@@ -8,7 +8,8 @@ namespace Containerschip.Models
 {
     public class Container
     {
-        public const int MaximumWeight = 30000;
+        public const int MaxWeight = 30000;
+        public const int MaxWeightOnTop = 120000;
 
         public Container(int weight, Type type)
         {

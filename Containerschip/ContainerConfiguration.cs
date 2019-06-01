@@ -17,14 +17,13 @@ namespace Containerschip
         {
             InitializeComponent();
             this.freighter = freighter;
+            unsortedContainers = new List<Container>();
         }
 
         private void BtnAddContainer_Click(object sender, EventArgs e)
         {
             try
             {
-                unsortedContainers = new List<Container>();
-
                 int containerWeight = Convert.ToInt32(nudContainerWeight.Value);
                 var type = Models.Type.Standard;
 
@@ -38,8 +37,7 @@ namespace Containerschip
                 }
 
                 unsortedContainers.Add(new Container(containerWeight, type));
-                unsortedContainers = unsortedContainers.OrderBy(x => x.Type).ThenByDescending(o => o.Weight).ToList();
-                lstContainers.Items.AddRange(unsortedContainers.ToArray());
+                UpdateContainerListBox();
                 rtxLog.ForeColor = Color.Green;
                 rtxLog.Text = "Container added.";
             }
@@ -56,7 +54,6 @@ namespace Containerschip
             try
             {
                 Freighter.WeightFailsLimits(freighter.MaximumWeight, freighter.MinimumWeight, freighter.LoadCapacity, TotalContainersWeight());
-
                 OpenFreighterVisual();
             }
             catch (ArgumentException exc)
@@ -71,8 +68,13 @@ namespace Containerschip
         {
             try
             {
-                //TODO:
-                // Container uit listbox en unsortedContainers verwijderen en listbox updaten
+                Container selectedContainer = lstContainers.SelectedItem as Container;
+                if (selectedContainer == null)
+                {
+                    MessageBox.Show("Please select a container");
+                }
+                unsortedContainers.Remove(selectedContainer);
+                UpdateContainerListBox();
             }
             catch (Exception exc)
             {
@@ -81,13 +83,21 @@ namespace Containerschip
             }
         }
 
+        /// <summary>
+        /// Shows the visualisation of the sorted containers
+        /// </summary>
         private void OpenFreighterVisual()
         {
             rtxLog.ForeColor = Color.Green;
             rtxLog.Text = "Sorting the containers...";
 
-            //TODO:
-            // Algoritme aanroepen en freighter meesturen
+            if (Freighter.CapacityExceedsWeightLimit(freighter.MaximumWeight, freighter.LoadCapacity))
+            {
+                freighter.LoadCapacity = freighter.MaximumWeight;
+            }
+
+            Algorithm algorithm = new Algorithm(freighter);
+            algorithm.Sort(unsortedContainers);
 
             //this.Hide();
             //FreighterVisual freighter1 = new FreighterVisual(freighter);
@@ -103,5 +113,13 @@ namespace Containerschip
         {
             return unsortedContainers.Sum(x => x.Weight);
         }
+
+        private void UpdateContainerListBox()
+        {
+            lstContainers.Items.Clear();
+            lstContainers.Items.AddRange(unsortedContainers.OrderBy(x => x.Type).ThenByDescending(o => o.Weight).ToArray());
+            lblTotalWeight.Text = TotalContainersWeight().ToString();
+        }
     }
 }
+    
