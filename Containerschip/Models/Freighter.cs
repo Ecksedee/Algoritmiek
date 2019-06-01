@@ -10,7 +10,7 @@ namespace Containerschip.Models
     {
         const int maxAmountOfStackedContainers = (Container.MaxWeightOnTop + Container.MaxWeight) / Container.MaxWeight; 
 
-        public Freighter(int lengthInContainers, int widthInContainers, int heightInCointainers, int loadCapacity)
+        public Freighter(int widthInContainers, int lengthInContainers, int heightInCointainers, int loadCapacity)
         {
             Length = lengthInContainers;
             Width = widthInContainers;
@@ -107,6 +107,42 @@ namespace Containerschip.Models
                 throw new ArgumentException(String.Format("The current amount of cooled containers: {0} exceeds the maximum amount of {1} containers.", cooledContainers.Count, MaxAmountOfCooledContainers()));
             }
             return false;
+        }
+
+        public int GetNextAvailableSpot(int length, int height, bool rightToLeft)
+        {
+            for (int x = 0; x < Containers.GetLength(0); x++) //Voor de hele breedte
+            {
+                if (rightToLeft)
+                {
+                    if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null) //Er is geen container op de meest rechtse positie
+                    {
+                        return (Containers.GetLength(0) - 1) - x;
+                    }
+                    else if (Containers[x, length, height] == null) //Er is geen container op de meest linkse positie
+                    {
+                        return x;
+                    }
+                }
+                else
+                {
+                    if (Containers[x, length, height] == null) //Er is geen container op de meest linkse positie
+                    {
+                        return x;
+                    }
+                    else if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null) //Er is geen container op de meest rechtse positie
+                    {
+                        return (Containers.GetLength(0) - 1) - x;
+                    }
+                }
+
+                if (x > (Containers.GetLength(0) - 1) - x) //We zijn over het midden heen we kunnen stoppen
+                {
+                    break;
+                }
+            }
+
+            return -1;
         }
     }
 }

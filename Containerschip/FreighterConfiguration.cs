@@ -22,7 +22,7 @@ namespace Containerschip
                 int heightInContainers = Convert.ToInt32(nudHeightInContainers.Value);
                 int loadCapacity = Convert.ToInt32(nudLoadCapacity.Value);
 
-                freighter = new Freighter(lengthInContainers, widthInContainers, heightInContainers, loadCapacity);
+                freighter = new Freighter(widthInContainers, lengthInContainers, heightInContainers, loadCapacity);
 
                 OpenContainerConfiguration();
             }

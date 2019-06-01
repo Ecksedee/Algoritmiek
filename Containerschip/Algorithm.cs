@@ -32,52 +32,26 @@ namespace Containerschip.Models
         {
             cooledContainers = SortContainersByWeight(cooledContainers);
 
-            int containernumber = 0;
+            int height = 0;
+            bool order = false;
 
-            for (int height = 0; height < freighter.Containers.GetLength(2); height++) // Voor elke laag
+            foreach (Container container in cooledContainers)
             {
-                int width = 0;
-                int widthCounterUp = width;
-                int widthCounterDown = freighter.Containers.GetLength(0) - 1;
-                bool countUp = false;
-
-                if (containernumber >= cooledContainers.Count)
+                int nextSpot = freighter.GetNextAvailableSpot(0, height, order);
+                if (nextSpot == -1)
                 {
-                    Console.WriteLine("No more containers, ending sorting");
-                    break;
+                    height++;
+                    order = !order;
+                    nextSpot = freighter.GetNextAvailableSpot(0, height, order);
                 }
 
-                for (int x = 0; x < freighter.Containers.GetLength(0); x++) // Voor elk vak in de breedte
+                if (WeightOnTopOfLowest(nextSpot, 0) + container.Weight < Container.MaxWeightOnTop)
                 {
-                    if (containernumber >= cooledContainers.Count)
-                    {
-                        Console.WriteLine("No more containers, ending sorting");
-                        break;
-                    }
-
-                    if (WeightOnTopOfLowest(width, 0) + cooledContainers[containernumber].Weight < Container.MaxWeightOnTop)
-                    {
-                        freighter.Containers[width, 0, height] = cooledContainers[containernumber];
-                    }
-                    else
-                    {
-                        throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
-                    }
-
-                    if (countUp)
-                    {
-                        width = widthCounterUp;
-                        countUp = false;
-                    }
-                    else
-                    {
-                        width = widthCounterDown;
-                        widthCounterDown--;
-                        widthCounterUp++;
-                        countUp = true;
-                    }
-
-                    containernumber++;
+                    freighter.Containers[nextSpot, 0, height] = container;
+                }
+                else
+                {
+                    throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
                 }
             }
             return freighter.Containers;

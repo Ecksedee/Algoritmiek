@@ -17,7 +17,7 @@ namespace ContainervervoerTest
             int freighterWidth = 3;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
             List<Container> unsortedContainers = new List<Container>();
 
             for (int i = 0; i < 30; i++)
@@ -40,7 +40,7 @@ namespace ContainervervoerTest
             int freighterWidth = 3;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
             List<Container> unsortedContainers = new List<Container>();
 
             for (int i = 0; i < 31; i++)
@@ -71,7 +71,7 @@ namespace ContainervervoerTest
             int freighterWidth = 3;
             int freighterHeight = 3;
             int freighterLoadCapacity = 1500000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
             List<Container> unsortedContainers = new List<Container>();
 
             for (int i = 0; i < 24; i++)
@@ -102,7 +102,7 @@ namespace ContainervervoerTest
             int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -123,7 +123,7 @@ namespace ContainervervoerTest
             unsortedCooledContainer.Add(new Container(14, cooled));
             unsortedCooledContainer.Add(new Container(15, cooled));
 
-            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(15, cooled), new Container(10, cooled), new Container(5, cooled) }, { new Container(13, cooled), new Container(8, cooled), new Container(3, cooled) }, { new Container(11, cooled), new Container(6, cooled), new Container(1, cooled) }, { new Container(12, cooled), new Container(7, cooled), new Container(2, cooled) }, { new Container(14, cooled), new Container(9, cooled), new Container(4, cooled) } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } } };
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3] { { { new Container(15, cooled), new Container(9, cooled), new Container(5, cooled) }, { new Container(13, cooled), new Container(7, cooled), new Container(3, cooled) }, { new Container(11, cooled), new Container(6, cooled), new Container(1, cooled) }, { new Container(12, cooled), new Container(8, cooled), new Container(2, cooled) }, { new Container(14, cooled), new Container(10, cooled), new Container(4, cooled) } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } }, { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } } };
 
             Algorithm algorithm = new Algorithm(freighter);
 
@@ -154,7 +154,7 @@ namespace ContainervervoerTest
             int freighterWidth = 3;
             int freighterHeight = 10;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -201,7 +201,7 @@ namespace ContainervervoerTest
             int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -223,7 +223,7 @@ namespace ContainervervoerTest
             unsortedCooledContainer.Add(new Container(15, cooled));
 
             Algorithm algorithm = new Algorithm(freighter);
-            int expectedResult = 15;
+            int expectedResult = 14;
 
             // Act
 
@@ -242,7 +242,7 @@ namespace ContainervervoerTest
             int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -274,6 +274,32 @@ namespace ContainervervoerTest
             Assert.AreEqual(expectedResult, actualResult);
         }
 
+        [TestMethod]
+        public void GetNextAvailablePosition_ShouldReturnLocation()
+        {
+            Freighter freighter = new Freighter(3, 5, 3, 900000);
+            Assert.AreEqual(2, freighter.GetNextAvailableSpot(0, 0, true));
+
+            freighter.Containers[2, 0, 0] = new Container(10, Containerschip.Models.Type.Cooled);
+            Assert.AreEqual(0, freighter.GetNextAvailableSpot(0, 0, true));
+
+            freighter.Containers[0, 0, 0] = new Container(10, Containerschip.Models.Type.Cooled);
+            Assert.AreEqual(1, freighter.GetNextAvailableSpot(0, 0, true));
+
+            freighter.Containers[1, 0, 0] = new Container(10, Containerschip.Models.Type.Cooled);
+            Assert.AreEqual(-1, freighter.GetNextAvailableSpot(0, 0, true));
+
+            Assert.AreEqual(0, freighter.GetNextAvailableSpot(1, 0, false));
+
+            freighter.Containers[0, 1, 0] = new Container(10, Containerschip.Models.Type.Cooled);
+            Assert.AreEqual(2, freighter.GetNextAvailableSpot(1, 0, false));
+
+            freighter.Containers[2, 1, 0] = new Container(10, Containerschip.Models.Type.Cooled);
+            Assert.AreEqual(1, freighter.GetNextAvailableSpot(1, 0, false));
+
+            freighter.Containers[1, 1, 0] = new Container(10, Containerschip.Models.Type.Cooled);
+            Assert.AreEqual(-1, freighter.GetNextAvailableSpot(1, 0, false));
+        }
 
         //[TestMethod]
         public void Sort_WhenContainersGiven_ShouldSortStandardContainers()
@@ -283,7 +309,7 @@ namespace ContainervervoerTest
             int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
             List<Container> unsortedContainer = new List<Container>();
             for (int i = 1; i < 10; i++)
             {
