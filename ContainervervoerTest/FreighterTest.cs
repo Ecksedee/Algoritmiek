@@ -643,5 +643,165 @@ namespace ContainervervoerTest
 
             Assert.AreEqual(expectedArrayToString, actualArrayToString);
         }
+
+        [TestMethod]
+        public void SortValuableContainers_WhenContainersGivenForOneLayer_ShouldSortValuable()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var valuable = Containerschip.Models.Type.Valuable;
+
+            for (int i = 1; i < 21; i++)
+            {
+                unsortedContainers.Add(new Container(i, valuable));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(20, valuable), null, null},
+                    {new Container(14, valuable), null, null},
+                    {null, null, null},
+                    {new Container(10, valuable), null, null},
+                    {new Container(4, valuable), null, null}
+                },
+                {
+                    { new Container(18, valuable), null, null },
+                    { new Container(12, valuable), null, null },
+                    {null, null, null },
+                    { new Container(8, valuable), null, null },
+                    { new Container(2, valuable), null, null }
+                },
+                {
+                    { new Container(16, valuable), null, null },
+                    { new Container(11, valuable), null, null },
+                    {null, null, null },
+                    { new Container(6, valuable), null, null },
+                    { new Container(1, valuable), null, null }
+                },
+                {
+                    { new Container(17, valuable), null, null },
+                    { new Container(13, valuable), null, null },
+                    {null, null, null },
+                    { new Container(7, valuable), null, null },
+                    { new Container(3, valuable), null, null }
+                },
+                {
+                    { new Container(19, valuable), null, null },
+                    { new Container(15, valuable), null, null },
+                    {null, null, null },
+                    { new Container(9, valuable), null, null },
+                    { new Container(5, valuable), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.SortValuableContainers(unsortedContainers);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
+        }
+
+        [TestMethod]
+        public void SortValuableContainers_WhenLayerHalfFilled_ShouldSortValuable()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var valuable = Containerschip.Models.Type.Valuable;
+            var standard = Containerschip.Models.Type.Standard;
+
+            for (int i = 1; i < 16; i++)
+            {
+                unsortedContainers.Add(new Container(i, valuable));
+            }
+
+            for (int i = 1; i < 6; i++)
+            {
+                unsortedContainers.Add(new Container(i, standard));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(5, standard), null, null},
+                    {new Container(14, valuable), null, null},
+                    {null, null, null},
+                    {new Container(10, valuable), null, null},
+                    {new Container(4, valuable), null, null}
+                },
+                {
+                    { new Container(3, standard), null, null },
+                    { new Container(12, valuable), null, null },
+                    {null, null, null },
+                    { new Container(8, valuable), null, null },
+                    { new Container(2, valuable), null, null }
+                },
+                {
+                    { new Container(1, standard), null, null },
+                    { new Container(11, valuable), null, null },
+                    {null, null, null },
+                    { new Container(6, valuable), null, null },
+                    { new Container(1, valuable), null, null }
+                },
+                {
+                    { new Container(2, standard), null, null },
+                    { new Container(13, valuable), null, null },
+                    {null, null, null },
+                    { new Container(7, valuable), null, null },
+                    { new Container(3, valuable), null, null }
+                },
+                {
+                    { new Container(4, standard), null, null },
+                    { new Container(15, valuable), null, null },
+                    {null, null, null },
+                    { new Container(9, valuable), null, null },
+                    { new Container(5, valuable), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
+        }
     }
 }

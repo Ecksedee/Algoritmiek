@@ -27,7 +27,7 @@ namespace Containerschip.Models
 
             SortCooledContainers(cooledContainers);
             SortStandardContainers(standardContainers);
-            //SortValuableContainers(valuableContainers);
+            SortValuableContainers(valuableContainers);
 
             return freighter.Containers;
         }
@@ -36,7 +36,82 @@ namespace Containerschip.Models
         {
             valuableContainers = SortContainersByWeight(valuableContainers);
 
-            throw new NotImplementedException();
+            int height = 0;
+            int length = 0;
+            bool order = false;
+            bool skipRow = false;
+
+            foreach (Container container in valuableContainers)
+            {
+                int nextSpot = freighter.GetNextAvailableSpot(length, height, order);
+                if (nextSpot == -1)
+                {
+                    if (length == freighter.Containers.GetLength(1) - 1)
+                    {
+                        if (height == freighter.Containers.GetLength(2) - 1)
+                        {
+                            throw new ArgumentException("The containers could not be sorted because the ship is full!");
+                        }
+                        else
+                        {
+                            height++;
+                        }
+
+                        length = 0;
+                    }
+                    else
+                    {
+                        length++;
+                    }
+                    if (skipRow)
+                    {
+                        length++;
+                    }
+
+                    order = !order;
+                    nextSpot = freighter.GetNextAvailableSpot(length, height, order);
+                }
+
+                if (!skipRow)
+                {
+                    if (length >= 1)
+                    {
+                        if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                        {
+                            freighter.Containers[nextSpot, length, height] = container;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                        }
+                        skipRow = !skipRow;
+                    }
+                    else
+                    {
+                        if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                        {
+                            freighter.Containers[nextSpot, length, height] = container;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                        }
+                    }
+                }
+                else
+                {
+                    if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                    {
+                        freighter.Containers[nextSpot, length, height] = container;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                    }
+                    skipRow = !skipRow;
+                }
+            }
+            return freighter.Containers;
         }
 
         /// <summary>
@@ -77,7 +152,7 @@ namespace Containerschip.Models
             standardContainers = SortContainersByWeight(standardContainers);
 
             int height = 0;
-             int length = 0;
+            int length = 0;
             bool order = false;
 
             foreach (Container container in standardContainers)
@@ -89,7 +164,7 @@ namespace Containerschip.Models
                     {
                         if (height == freighter.Containers.GetLength(2) - 1)
                         {
-                            throw new ArgumentException("The container could not be sorted because the ship is full!");
+                            throw new ArgumentException("The containers could not be sorted because the ship is full!");
                         }
                         else
                         {
@@ -114,12 +189,6 @@ namespace Containerschip.Models
                 else
                 {
                     throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
-                }
-
-                if (length == freighter.Containers.GetLength(1))
-                {
-                    height++;
-                    length = 0;
                 }
             }
             return freighter.Containers;
