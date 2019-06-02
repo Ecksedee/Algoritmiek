@@ -85,7 +85,24 @@ namespace Containerschip.Models
                 int nextSpot = freighter.GetNextAvailableSpot(length, height, order);
                 if (nextSpot == -1)
                 {
-                    length++;
+                    if (length == freighter.Containers.GetLength(1) - 1)
+                    {
+                        if (height == freighter.Containers.GetLength(2) - 1)
+                        {
+                            throw new ArgumentException("The container could not be sorted because the ship is full!");
+                        }
+                        else
+                        {
+                            height++;
+                        }
+
+                        length = 0;
+                    }
+                    else
+                    {
+                        length++;
+                    }
+
                     order = !order;
                     nextSpot = freighter.GetNextAvailableSpot(length, height, order);
                 }

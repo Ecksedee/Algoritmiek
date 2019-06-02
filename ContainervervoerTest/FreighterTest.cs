@@ -321,7 +321,7 @@ namespace ContainervervoerTest
             unsortedContainers.Add(new Container(5, cooled));
             unsortedContainers.Add(new Container(6, cooled));
 
-            for (int i = 1; i < 25; i++)
+            for (int i = 1; i < 26; i++)
             {
                 unsortedContainers.Add(new Container(i, standard));
             }
@@ -329,39 +329,39 @@ namespace ContainervervoerTest
             Container[,,] expectedContainersSorted = new Container[5, 5, 3]
             {
                 {
-                    {new Container(6, cooled), new Container(1, cooled), null},
-                    {new Container(4, cooled), new Container(3, standard), null},
-                    {new Container(2, cooled), new Container(1, standard), null},
-                    {new Container(3, cooled), new Container(2, standard), null},
-                    {new Container(5, cooled), new Container(4, standard), null}
+                    {new Container(6, cooled), new Container(5, standard), null},
+                    {new Container(24, standard), new Container(1, standard), null},
+                    {new Container(20, standard), null, null},
+                    {new Container(14, standard), null, null},
+                    {new Container(10, standard), null, null}
                 },
                 {
-                    { new Container(23, standard), null, null },
-                    { new Container(21, standard), null, null },
-                    { new Container(20, standard), null, null },
+                    { new Container(4, cooled), new Container(3, standard), null },
                     { new Container(22, standard), null, null },
-                    { new Container(24, standard), null, null }
-                },
-                {
-                    { new Container(19, standard), null, null },
-                    { new Container(17, standard), null, null },
-                    { new Container(15, standard), null, null },
-                    { new Container(16, standard), null, null },
-                    { new Container(18, standard), null, null }
-                },
-                {
-                    { new Container(13, standard), null, null },
-                    { new Container(11, standard), null, null },
-                    { new Container(10, standard), null, null },
+                    { new Container(18, standard), null, null },
                     { new Container(12, standard), null, null },
-                    { new Container(14, standard), null, null }
+                    { new Container(8, standard), null, null }
                 },
                 {
-                    { new Container(9, standard), null, null },
-                    { new Container(7, standard), null, null },
-                    { new Container(5, standard), null, null },
-                    { new Container(6, standard), null, null },
-                    { new Container(8, standard), null, null }
+                    { new Container(2, cooled), new Container(2, standard), null },
+                    { new Container(21, standard), null, null },
+                    { new Container(16, standard), null, null },
+                    { new Container(11, standard), null, null },
+                    { new Container(6, standard), null, null }
+                },
+                {
+                    { new Container(3, cooled), new Container(4, standard), null },
+                    { new Container(23, standard), null, null },
+                    { new Container(17, standard), null, null },
+                    { new Container(13, standard), null, null },
+                    { new Container(7, standard), null, null }
+                },
+                {
+                    { new Container(5, cooled), new Container(1, cooled), null },
+                    { new Container(25, standard), null, null },
+                    { new Container(19, standard), null, null },
+                    { new Container(15, standard), null, null },
+                    { new Container(9, standard), null, null }
                 }
             };
 
@@ -424,21 +424,11 @@ namespace ContainervervoerTest
             Container[,,] expectedContainersSorted = new Container[5, 5, 3]
             {
                 {
-                    {
-                        new Container(15, cooled), new Container(9, cooled), new Container(5, cooled)
-                    },
-                    {
-                        new Container(13, cooled), new Container(7, cooled), new Container(3, cooled)
-                    },
-                    {
-                        new Container(11, cooled), new Container(6, cooled), new Container(1, cooled)
-                    },
-                    {
-                        new Container(12, cooled), new Container(8, cooled), new Container(2, cooled)
-                    },
-                    {
-                        new Container(14, cooled), new Container(10, cooled), new Container(4, cooled)
-                    }
+                    {new Container(15, cooled), new Container(9, cooled), new Container(5, cooled)},
+                    {new Container(13, cooled), new Container(7, cooled), new Container(3, cooled)},
+                    {new Container(11, cooled), new Container(6, cooled), new Container(1, cooled)},
+                    {new Container(12, cooled), new Container(8, cooled), new Container(2, cooled)},
+                    {new Container(14, cooled), new Container(10, cooled), new Container(4, cooled)}
                 },
                 {
                     { new Container(21, standard), new Container(2, standard), null },
@@ -510,6 +500,7 @@ namespace ContainervervoerTest
             unsortedContainers.Add(new Container(4, cooled));
             unsortedContainers.Add(new Container(5, cooled));
             unsortedContainers.Add(new Container(6, cooled));
+            unsortedContainers.Add(new Container(7, cooled));
 
             for (int i = 1; i < 31; i++)
             {
@@ -519,11 +510,11 @@ namespace ContainervervoerTest
             Container[,,] expectedContainersSorted = new Container[5, 5, 3]
             {
                 {
-                    {new Container(7, cooled), new Container(2, cooled), null},
-                    {new Container(29, cooled), new Container(6, standard), null},
-                    {new Container(25, cooled), new Container(2, standard), null},
-                    {new Container(19, cooled), null, null},
-                    {new Container(15, cooled), null, null}
+                    {new Container(7, cooled), new Container(1, cooled), null},
+                    {new Container(29, standard), new Container(6, standard), null},
+                    {new Container(25, standard), new Container(2, standard), null},
+                    {new Container(19, standard), null, null},
+                    {new Container(15, standard), null, null}
                 },
                 {
                     { new Container(5, cooled), new Container(9, standard), null },
@@ -547,7 +538,7 @@ namespace ContainervervoerTest
                     { new Container(12, standard), null, null }
                 },
                 {
-                    { new Container(6, cooled), new Container(1, cooled), null },
+                    { new Container(6, cooled), new Container(2, cooled), null },
                     { new Container(30, standard), new Container(7, standard), null },
                     { new Container(24, standard), new Container(1, standard), null },
                     { new Container(20, standard), null, null },
