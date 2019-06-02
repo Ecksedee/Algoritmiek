@@ -242,7 +242,7 @@ namespace ContainervervoerTest
             int freighterWidth = 5;
             int freighterHeight = 3;
             int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterLength, freighterWidth, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -311,7 +311,7 @@ namespace ContainervervoerTest
             int freighterLoadCapacity = 900000;
             Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
             List<Container> unsortedContainers = new List<Container>();
-            var cooled = Containerschip.Models.Type.Standard;
+            var cooled = Containerschip.Models.Type.Cooled;
             var standard = Containerschip.Models.Type.Standard;
 
             unsortedContainers.Add(new Container(1, cooled));
@@ -383,7 +383,7 @@ namespace ContainervervoerTest
                 actualArrayToString += s;
             }
 
-            Assert.AreEqual(expectedArrayToString, expectedArrayToString);
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
         }
 
         [TestMethod]
@@ -396,8 +396,25 @@ namespace ContainervervoerTest
             int freighterLoadCapacity = 900000;
             Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
             List<Container> unsortedContainers = new List<Container>();
-            var cooled = Containerschip.Models.Type.Standard;
+            var cooled = Containerschip.Models.Type.Cooled;
             var standard = Containerschip.Models.Type.Standard;
+
+            unsortedContainers.Add(new Container(1, cooled));
+            unsortedContainers.Add(new Container(2, cooled));
+            unsortedContainers.Add(new Container(3, cooled));
+            unsortedContainers.Add(new Container(4, cooled));
+            unsortedContainers.Add(new Container(5, cooled));
+            unsortedContainers.Add(new Container(6, cooled));
+            unsortedContainers.Add(new Container(7, cooled));
+            unsortedContainers.Add(new Container(8, cooled));
+            unsortedContainers.Add(new Container(9, cooled));
+            unsortedContainers.Add(new Container(10, cooled));
+            unsortedContainers.Add(new Container(11, cooled));
+            unsortedContainers.Add(new Container(12, cooled));
+            unsortedContainers.Add(new Container(13, cooled));
+            unsortedContainers.Add(new Container(14, cooled));
+            unsortedContainers.Add(new Container(15, cooled));
+
 
             for (int i = 1; i < 23; i++)
             {
@@ -471,7 +488,169 @@ namespace ContainervervoerTest
                 actualArrayToString += s;
             }
 
-            Assert.AreEqual(expectedArrayToString, expectedArrayToString);
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
+        }
+
+        [TestMethod]
+        public void Sort_WhenCooledContainersNotEntirelyFilled2_ShouldSortStandardAtFront()
+        {
+            // Arrange
+            int freighterLength = 5;
+            int freighterWidth = 5;
+            int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var cooled = Containerschip.Models.Type.Cooled;
+            var standard = Containerschip.Models.Type.Standard;
+
+            unsortedContainers.Add(new Container(1, cooled));
+            unsortedContainers.Add(new Container(2, cooled));
+            unsortedContainers.Add(new Container(3, cooled));
+            unsortedContainers.Add(new Container(4, cooled));
+            unsortedContainers.Add(new Container(5, cooled));
+            unsortedContainers.Add(new Container(6, cooled));
+
+            for (int i = 1; i < 31; i++)
+            {
+                unsortedContainers.Add(new Container(i, standard));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[5, 5, 3]
+            {
+                {
+                    {new Container(7, cooled), new Container(2, cooled), null},
+                    {new Container(29, cooled), new Container(6, standard), null},
+                    {new Container(25, cooled), new Container(2, standard), null},
+                    {new Container(19, cooled), null, null},
+                    {new Container(15, cooled), null, null}
+                },
+                {
+                    { new Container(5, cooled), new Container(9, standard), null },
+                    { new Container(27, standard), new Container(4, standard), null },
+                    { new Container(23, standard), null, null },
+                    { new Container(17, standard), null, null },
+                    { new Container(13, standard), null, null }
+                },
+                {
+                    { new Container(3, cooled), new Container(8, standard), null },
+                    { new Container(26, standard), new Container(3, standard), null },
+                    { new Container(21, standard), null, null },
+                    { new Container(16, standard), null, null },
+                    { new Container(11, standard), new Container(1, standard), null }
+                },
+                {
+                    { new Container(4, cooled), new Container(10, standard), null },
+                    { new Container(28, standard), new Container(5, standard), null },
+                    { new Container(22, standard), null, null },
+                    { new Container(18, standard), null, null },
+                    { new Container(12, standard), null, null }
+                },
+                {
+                    { new Container(6, cooled), new Container(1, cooled), null },
+                    { new Container(30, standard), new Container(7, standard), null },
+                    { new Container(24, standard), new Container(1, standard), null },
+                    { new Container(20, standard), null, null },
+                    { new Container(14, standard), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
+        }
+
+        [TestMethod]
+        public void SortStandardContainers_WhenContainersGivenForOneLayer_ShouldSortStandard()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var standard = Containerschip.Models.Type.Standard;
+
+            for (int i = 1; i < 26; i++)
+            {
+                unsortedContainers.Add(new Container(i, standard));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(25, standard), null, null},
+                    {new Container(19, standard), null, null},
+                    {new Container(15, standard), null, null},
+                    {new Container(9, standard), null, null},
+                    {new Container(5, standard), null, null}
+                },
+                {
+                    { new Container(23, standard), null, null },
+                    { new Container(17, standard), null, null },
+                    { new Container(13, standard), null, null },
+                    { new Container(7, standard), null, null },
+                    { new Container(3, standard), null, null }
+                },
+                {
+                    { new Container(21, standard), null, null },
+                    { new Container(16, standard), null, null },
+                    { new Container(11, standard), null, null },
+                    { new Container(6, standard), null, null },
+                    { new Container(1, standard), null, null }
+                },
+                {
+                    { new Container(22, standard), null, null },
+                    { new Container(18, standard), null, null },
+                    { new Container(12, standard), null, null },
+                    { new Container(8, standard), null, null },
+                    { new Container(2, standard), null, null }
+                },
+                {
+                    { new Container(24, standard), null, null },
+                    { new Container(20, standard), null, null },
+                    { new Container(14, standard), null, null },
+                    { new Container(10, standard), null, null },
+                    { new Container(4, standard), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.SortStandardContainers(unsortedContainers);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
         }
     }
 }
