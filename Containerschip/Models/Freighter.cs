@@ -27,7 +27,7 @@ namespace Containerschip.Models
         public int LoadCapacity { get; set; }
         public double MinimumWeight { get; private set; }
         public int MaximumWeight { get; private set; }
-        public Container[,,] Containers { get; private set; }
+        public Container[,,] Containers { get; set; }
 
         /// <summary>
         /// Calculates the minimum weight of the freighter.
@@ -115,33 +115,43 @@ namespace Containerschip.Models
             {
                 if (rightToLeft)
                 {
-                    if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null) //Er is geen container op de meest rechtse positie
+                    if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null
+                    && (height == 0
+                    || (Containers[(Containers.GetLength(0) - 1) - x, length, height - 1] != null
+                    && Containers[(Containers.GetLength(0) - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
                     {
                         return (Containers.GetLength(0) - 1) - x;
                     }
-                    else if (Containers[x, length, height] == null) //Er is geen container op de meest linkse positie
+                    else if (Containers[x, length, height] == null
+                    && (height == 0
+                    || (Containers[x, length, height - 1] != null
+                    && Containers[x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest linkse positie
                     {
                         return x;
                     }
                 }
                 else
                 {
-                    if (Containers[x, length, height] == null) //Er is geen container op de meest linkse positie
+                    if (Containers[x, length, height] == null
+                    && (height == 0
+                    || (Containers[x, length, height - 1] != null
+                    && Containers[x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest linkse positie
                     {
                         return x;
                     }
-                    else if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null) //Er is geen container op de meest rechtse positie
+                    else if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null
+                    && (height == 0
+                    || (Containers[(Containers.GetLength(0) - 1) - x, length, height - 1] != null
+                    && Containers[(Containers.GetLength(0) - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
                     {
                         return (Containers.GetLength(0) - 1) - x;
                     }
                 }
-
                 if (x > (Containers.GetLength(0) - 1) - x) //We zijn over het midden heen we kunnen stoppen
                 {
                     return -1;
                 }
             }
-
             return -1;
         }
     }

@@ -803,5 +803,163 @@ namespace ContainervervoerTest
 
             Assert.AreEqual(expectedArrayToString, actualArrayToString);
         }
+
+        [TestMethod]
+        public void GetNextSpot_WhenNoContainerUnder_ShouldReturnMinusOne()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+
+
+            // Act
+            int expectedResult = freighter.GetNextAvailableSpot(0, 2, false);
+
+            // Assert
+            Assert.AreEqual(expectedResult, -1);
+        }
+
+        [TestMethod]
+        public void GetNextSpot_WhenValuableContainerUnder_ShouldReturnMinusOne()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var valuable = Containerschip.Models.Type.Valuable;
+            var standard = Containerschip.Models.Type.Standard;
+
+            for (int i = 1; i < 25; i++)
+            {
+                unsortedContainers.Add(new Container(i, standard));
+            }
+
+            for (int i = 1; i < 21; i++)
+            {
+                unsortedContainers.Add(new Container(i, valuable));
+            }
+
+            freighter.Containers = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(24, standard), new Container(18, valuable), null},
+                    {new Container(18, standard), new Container(14, valuable), null},
+                    {new Container(14, standard), null, null},
+                    {new Container(8, standard), new Container(8, valuable), null},
+                    {new Container(4, standard), new Container(4, valuable), null}
+                },
+                {
+                    {new Container(22, standard), new Container(16, valuable), null},
+                    {new Container(16, standard), new Container(12, valuable), null},
+                    {new Container(12, standard), null, null},
+                    {new Container(6, standard), new Container(6, valuable), null},
+                    {new Container(2, standard), new Container(2, valuable), null}
+                },
+                {
+                    {new Container(20, standard), new Container(15, valuable), null},
+                    {new Container(15, standard), new Container(10, valuable), null},
+                    {new Container(10, standard), null, null},
+                    {new Container(5, standard), new Container(5, valuable), null},
+                    {new Container(20, valuable), null, null}
+                },
+                {
+                    {new Container(21, standard), new Container(17, valuable), null},
+                    {new Container(17, standard), new Container(11, valuable), null},
+                    {new Container(11, standard), null, null},
+                    {new Container(7, standard), new Container(7, valuable), null},
+                    {new Container(1, standard), new Container(1, valuable), null}
+                },
+                {
+                    {new Container(23, standard), new Container(19, valuable), null},
+                    {new Container(19, standard), new Container(13, valuable), null},
+                    {new Container(13, standard), null, null},
+                    {new Container(9, standard), new Container(9, valuable), null},
+                    {new Container(3, standard), new Container(3, valuable), null}
+                }
+            };
+
+            // Act
+            int actualResult = freighter.GetNextAvailableSpot(4, 1, false);
+
+            // Assert
+            Assert.AreEqual(-1, actualResult);
+        }
+
+        [TestMethod]
+        public void Sort_WhenValuableUnder_ShouldThrowArgument()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            List<Container> unsortedContainers = new List<Container>();
+            var valuable = Containerschip.Models.Type.Valuable;
+
+            for (int i = 1; i < 20; i++)
+            {
+                unsortedContainers.Add(new Container(i, valuable));
+            }
+
+            freighter.Containers     = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(20, valuable), null, null},
+                    {new Container(14, valuable), null, null},
+                    {null, null, null},
+                    {new Container(10, valuable), null, null},
+                    {new Container(4, valuable), null, null}
+                },
+                {
+                    { new Container(18, valuable), null, null },
+                    { new Container(12, valuable), null, null },
+                    {null, null, null },
+                    { new Container(8, valuable), null, null },
+                    { new Container(2, valuable), null, null }
+                },
+                {
+                    { new Container(16, valuable), null, null },
+                    { new Container(11, valuable), null, null },
+                    {null, null, null },
+                    { new Container(6, valuable), null, null },
+                    { new Container(1, valuable), null, null }
+                },
+                {
+                    { new Container(17, valuable), null, null },
+                    { new Container(13, valuable), null, null },
+                    {null, null, null },
+                    { new Container(7, valuable), null, null },
+                    { new Container(3, valuable), null, null }
+                },
+                {
+                    { new Container(19, valuable), null, null },
+                    { new Container(15, valuable), null, null },
+                    {null, null, null },
+                    { new Container(9, valuable), null, null },
+                    { new Container(5, valuable), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            
+            try
+            {
+                // Act
+                algorithm.Sort(unsortedContainers);
+            }
+            catch (ArgumentException exc)
+            {
+                Assert.AreEqual("The containers could not be sorted because the ship is full!", exc.Message);
+            }
+
+        }
     }
 }
