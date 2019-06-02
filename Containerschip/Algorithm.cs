@@ -76,39 +76,21 @@ namespace Containerschip.Models
                 {
                     if (length >= 1)
                     {
-                        if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
-                        {
-                            freighter.Containers[nextSpot, length, height] = container;
-                        }
-                        else
-                        {
-                            throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
-                        }
                         skipRow = !skipRow;
-                    }
-                    else
-                    {
-                        if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
-                        {
-                            freighter.Containers[nextSpot, length, height] = container;
-                        }
-                        else
-                        {
-                            throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
-                        }
                     }
                 }
                 else
                 {
-                    if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
-                    {
-                        freighter.Containers[nextSpot, length, height] = container;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
-                    }
                     skipRow = !skipRow;
+                }
+
+                if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                {
+                    freighter.Containers[nextSpot, length, height] = container;
+                }
+                else
+                {
+                    throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
                 }
             }
             return freighter.Containers;
