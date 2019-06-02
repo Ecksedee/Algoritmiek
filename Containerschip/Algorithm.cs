@@ -84,16 +84,24 @@ namespace Containerschip.Models
                     skipRow = !skipRow;
                 }
 
-                if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                if (ContainerUnder(nextSpot, length, height) && !ValuableUnder(nextSpot, length, height))
                 {
-                    freighter.Containers[nextSpot, length, height] = container;
-                }
-                else
-                {
-                    throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                    if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                    {
+                        freighter.Containers[nextSpot, length, height] = container;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                    }
                 }
             }
             return freighter.Containers;
+        }
+
+        public bool ContainerUnder(int width, int length)
+        {
+            
         }
 
         /// <summary>
