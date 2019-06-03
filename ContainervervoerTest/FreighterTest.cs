@@ -890,5 +890,41 @@ namespace ContainervervoerTest
 
             Assert.AreEqual(expectedArrayToString, actualArrayToString);
         }
+
+        [TestMethod]
+        public void Sort_WhenNoSpaceValuable_ShouldThrowArgument()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
+            List<Container> unsortedContainers = new List<Container>();
+            var valuable = Containerschip.Models.Type.Valuable;
+            var standard = Containerschip.Models.Type.Standard;
+
+            for (int i = 1; i < 26; i++)
+            {
+                unsortedContainers.Add(new Container(30000, standard));
+            }
+
+            for (int i = 1; i < 26; i++)
+            {
+                unsortedContainers.Add(new Container(30000, valuable));
+            }
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            try
+            {
+                // Act
+                Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
+            }
+            catch (ArgumentException exc)
+            {
+                // Assert
+                Assert.AreEqual("The valuable containers could not be sorted because the ship is full!", exc.Message);
+            }
+        }
     }
 }

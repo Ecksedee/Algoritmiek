@@ -57,7 +57,7 @@ namespace Containerschip.Models
                 int nextSpot = freighter.GetNextAvailableSpot(length, height, order);
                 while (nextSpot == -1)
                 {
-                    if (length == freighter.Containers.GetLength(1) - 1)
+                    if ((length + 1 == freighter.Containers.GetLength(1) && !skipRow) || (length + 2 == freighter.Containers.GetLength(1) && skipRow))
                     {
                         if (height == freighter.Containers.GetLength(2) - 1)
                         {
@@ -72,11 +72,14 @@ namespace Containerschip.Models
                     }
                     else
                     {
-                        length++;
-                    }
-                    if (skipRow)
-                    {
-                        length++;
+                        if (skipRow)
+                        {
+                            length += 2;
+                        }
+                        else
+                        {
+                            length += 1;
+                        }
                     }
 
                     order = !order;
@@ -108,7 +111,7 @@ namespace Containerschip.Models
                 }
                 else
                 {
-                    throw new ArgumentException("There's not enough space for the valuable containers");
+                    throw new ArgumentException("The valuable containers could not be sorted because the ship is full!");
                 }
 
             }
