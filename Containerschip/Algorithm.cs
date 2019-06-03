@@ -32,7 +32,15 @@ namespace Containerschip.Models
 
             freighter.Balance = freighter.CalculateBalance();
 
-            return freighter.Containers;
+            if (freighter.Balance <= -20 && freighter.Balance >= 20)
+            {
+                return freighter.Containers;
+            }
+            else
+            {
+                throw new ArgumentException("The balance of the ship is over 20%. The containers can't be sorted.");
+            }
+
         }
 
         public Container[,,] SortValuableContainers(List<Container> valuableContainers)
