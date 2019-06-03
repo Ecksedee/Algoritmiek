@@ -105,12 +105,23 @@ namespace Containerschip
             rtxLog.Text = "Sorting the containers...";
 
             Algorithm algorithm = new Algorithm(freighter);
-            algorithm.Sort(unsortedContainers);
+            freighter.Containers = algorithm.Sort(unsortedContainers);
             rtxLog.Text = String.Format("The containers have been sorted with a weight difference of {0}",freighter.Balance);
-            //this.Hide();
-            //FreighterVisual freighter1 = new FreighterVisual(freighter);
-            //freighter1.ShowDialog();
-            //this.Close();
+
+            string visualText = "";
+
+            for (int width = 0; width < freighter.Width; width++)
+            {
+                for (int length = 0; length < freighter.Length; length++)
+                {
+                    for (int height = 0; height < freighter.Height; height++)
+                    {
+                        visualText += String.Format("[{0},{1},{2}] = {3}", width, length, height, freighter.Containers[width, length, height]) + "\n";
+                    }
+                }
+            }
+
+            rtxVisual.Text = visualText;
         }
 
         /// <summary>

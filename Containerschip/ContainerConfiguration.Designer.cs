@@ -47,11 +47,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.chkRandomize = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rtxVisual = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudContainerWeight)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAmount)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -274,12 +277,31 @@
             this.chkRandomize.UseVisualStyleBackColor = true;
             this.chkRandomize.CheckedChanged += new System.EventHandler(this.ChkRandomize_CheckedChanged);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.rtxVisual);
+            this.groupBox4.Location = new System.Drawing.Point(12, 269);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(775, 357);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Visual";
+            // 
+            // rtxVisual
+            // 
+            this.rtxVisual.Location = new System.Drawing.Point(6, 19);
+            this.rtxVisual.Name = "rtxVisual";
+            this.rtxVisual.Size = new System.Drawing.Size(763, 332);
+            this.rtxVisual.TabIndex = 12;
+            this.rtxVisual.Text = "";
+            // 
             // ContainerConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(799, 281);
+            this.ClientSize = new System.Drawing.Size(799, 638);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnStartSorting);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -294,6 +316,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAmount)).EndInit();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -319,5 +342,7 @@
         private System.Windows.Forms.NumericUpDown nudAmount;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.CheckBox chkRandomize;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RichTextBox rtxVisual;
     }
 }

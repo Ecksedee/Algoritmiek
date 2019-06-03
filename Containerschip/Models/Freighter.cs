@@ -8,7 +8,7 @@ namespace Containerschip.Models
 {
     public class Freighter
     {
-        const int maxAmountOfStackedContainers = (Container.MaxWeightOnTop + Container.MaxWeight) / Container.MaxWeight; 
+        const int maxAmountOfStackedContainers = (Container.MaxWeightOnTop + Container.MaxWeight) / Container.MaxWeight;
 
         public Freighter(int widthInContainers, int lengthInContainers, int heightInCointainers)
         {
@@ -34,7 +34,7 @@ namespace Containerschip.Models
         /// <returns></returns>
         private double CalculateMinimumWeight()
         {
-            return Convert.ToDouble(MaximumWeight / 2);
+            return 1; //Convert.ToDouble(MaximumWeight / 2);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Containerschip.Models
             {
                 throw new ArgumentException(String.Format("The current weight of {0} kg exceeds the maximum weight of the freighter of {1} Kg", totalContainersWeight, MaximumWeight));
             }
-            else if (totalContainersWeight < MinimumWeight )
+            else if (totalContainersWeight < MinimumWeight)
             {
                 throw new ArgumentException(String.Format("The current weight: {0} kg fails to reach the minimum amount of {1} kg required.", totalContainersWeight, MinimumWeight));
             }
@@ -91,16 +91,16 @@ namespace Containerschip.Models
 
         public int GetNextAvailableSpot(int length, int height, bool rightToLeft)
         {
-            for (int x = 0; x < Containers.GetLength(0); x++) //Voor de hele breedte
+            for (int x = 0; x < Width; x++) //Voor de hele breedte
             {
                 if (rightToLeft)
                 {
-                    if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null
+                    if (Containers[(Width - 1) - x, length, height] == null
                     && (height == 0
-                    || (Containers[(Containers.GetLength(0) - 1) - x, length, height - 1] != null
-                    && Containers[(Containers.GetLength(0) - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
+                    || (Containers[(Width - 1) - x, length, height - 1] != null
+                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
                     {
-                        return (Containers.GetLength(0) - 1) - x;
+                        return (Width - 1) - x;
                     }
                     else if (Containers[x, length, height] == null
                     && (height == 0
@@ -119,15 +119,15 @@ namespace Containerschip.Models
                     {
                         return x;
                     }
-                    else if (Containers[(Containers.GetLength(0) - 1) - x, length, height] == null
+                    else if (Containers[(Width - 1) - x, length, height] == null
                     && (height == 0
-                    || (Containers[(Containers.GetLength(0) - 1) - x, length, height - 1] != null
-                    && Containers[(Containers.GetLength(0) - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
+                    || (Containers[(Width - 1) - x, length, height - 1] != null
+                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
                     {
-                        return (Containers.GetLength(0) - 1) - x;
+                        return (Width - 1) - x;
                     }
                 }
-                if (x > (Containers.GetLength(0) - 1) - x) //We zijn over het midden heen we kunnen stoppen
+                if (x > (Width - 1) - x) //We zijn over het midden heen we kunnen stoppen
                 {
                     return -1;
                 }
@@ -139,73 +139,29 @@ namespace Containerschip.Models
         {
             double weightLeft = 0;
             double weightRight = 0;
-            double weightDifference;
 
-            if (Width % 2 == 0) // Width is even
+            for (int height = 0; height < Height; height++)
             {
-                for (int height = 0; height < Height; height++)
+                for (int length = 0; length < Length; length++)
                 {
-                    for (int length = 0; length < Length; length++)
+                    for (int width = 0; width < Width; width++)
                     {
-                        for (int width = 0; width < Width / 2; width++)
+                        if (Containers[width, length, height] != null && width < Width / 2)
                         {
-                            if (Containers[width, length, height] == null)
-                            {
-                                weightLeft += 0;
-                            }
-                            else
-                            {
-                                weightLeft += Containers[width, length, height].Weight;
-                            }
+                            weightLeft += Containers[width, length, height].Weight;
                         }
-                        for (int width = Width / 2; width < Width; width++)
+                        else if (Containers[width, length, height] != null && width >= Width / 2 && Width % 2 == 0)
                         {
-                            if (Containers[width, length, height] == null)
-                            {
-                                weightRight += 0;
-                            }
-                            else
-                            {
-                                weightRight += Containers[width, length, height].Weight;
-                            }
+                            weightRight += Containers[width, length, height].Weight;
+                        }
+                        else if (Containers[width, length, height] != null && width > Width / 2)
+                        {
+                            weightRight += Containers[width, length, height].Weight;
                         }
                     }
                 }
-                weightDifference = (weightLeft - weightRight) / weightRight * 100;
             }
-            else // Width is uneven
-            {
-                for (int height = 0; height < Height; height++)
-                {
-                    for (int length = 0; length < Length; length++)
-                    {
-                        for (int width = 0; width < Width / 2; width++)
-                        {
-                            if (Containers[width, length, height] == null)
-                            {
-                                weightLeft += 0;
-                            }
-                            else
-                            {
-                                weightLeft += Containers[width, length, height].Weight;
-                            }
-                        }
-                        for (int width = Width / 2 + 1; width < Width; width++)
-                        {
-                            if (Containers[width, length, height] == null)
-                            {
-                                weightRight += 0;
-                            }
-                            else
-                            {
-                                weightRight += Containers[width, length, height].Weight;
-                            }
-                        }
-                    }
-                }
-                weightDifference = (weightLeft - weightRight) / weightRight * 100;
-            }
-            return weightDifference;
+            return (weightLeft - weightRight) / weightRight * 100;
         }
     }
 }
