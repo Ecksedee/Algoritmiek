@@ -93,41 +93,37 @@ namespace Containerschip.Models
         {
             for (int x = 0; x < Width; x++) //Voor de hele breedte
             {
-                if (rightToLeft)
+                if (rightToLeft) // Boolean bepaalt waar eerst gekeken wordt
                 {
-                    if (Containers[(Width - 1) - x, length, height] == null
-                    && (height == 0
-                    || (Containers[(Width - 1) - x, length, height - 1] != null
-                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
+                    if (Containers[(Width - 1) - x, length, height] == null // Als er op de uiterste width (rechterkant) niks staat
+                    && (height == 0 || (Containers[(Width - 1) - x, length, height - 1] != null // EN het is de eerste laag OF er staat iets onder 
+                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) // EN de container eronder is niet valuable
                     {
-                        return (Width - 1) - x;
+                        return (Width - 1) - x; // De plek is vrij
                     }
-                    else if (Containers[x, length, height] == null
-                    && (height == 0
-                    || (Containers[x, length, height - 1] != null
-                    && Containers[x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest linkse positie
+                    else if (Containers[x, length, height] == null // Anders als er op de andere uiterste kant niks staat
+                    && (height == 0 || (Containers[x, length, height - 1] != null // EN het is de eerste laag OF er staat iets onder
+                    && Containers[x, length, height - 1].Type != Type.Valuable))) // EN de container eronder is niet valuable
                     {
-                        return x;
+                        return x;  // De plek is vrij
                     }
                 }
-                else
+                else  //Hetzelfde maar van de andere kant beginnen
                 {
                     if (Containers[x, length, height] == null
-                    && (height == 0
-                    || (Containers[x, length, height - 1] != null
-                    && Containers[x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest linkse positie
+                    && (height == 0 || (Containers[x, length, height - 1] != null
+                    && Containers[x, length, height - 1].Type != Type.Valuable))) 
                     {
                         return x;
                     }
                     else if (Containers[(Width - 1) - x, length, height] == null
-                    && (height == 0
-                    || (Containers[(Width - 1) - x, length, height - 1] != null
-                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) //Er is geen container op de meest rechtse positie
+                    && (height == 0 || (Containers[(Width - 1) - x, length, height - 1] != null
+                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) 
                     {
                         return (Width - 1) - x;
                     }
                 }
-                if (x > (Width - 1) - x) //We zijn over het midden heen we kunnen stoppen
+                if (x > (Width - 1) - x) //Zodra we over het midden van de width zijn kunnen we stoppen
                 {
                     return -1;
                 }
