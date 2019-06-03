@@ -61,7 +61,7 @@ namespace Containerschip.Models
                     {
                         if (height == freighter.Containers.GetLength(2) - 1)
                         {
-                            throw new ArgumentException("The containers could not be sorted because the ship is full!");
+                            throw new ArgumentException("The valuable containers could not be sorted because the ship is full!");
                         }
                         else
                         {
