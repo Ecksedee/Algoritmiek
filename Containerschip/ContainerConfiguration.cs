@@ -106,7 +106,7 @@ namespace Containerschip
 
             Algorithm algorithm = new Algorithm(freighter);
             freighter.Containers = algorithm.Sort(unsortedContainers);
-            rtxLog.Text = String.Format("The containers have been sorted with a weight difference of {0}",freighter.Balance);
+            rtxLog.Text = String.Format("The containers have been sorted with a left/right weight difference of {0} %",freighter.Balance);
 
             string visualText = "";
 

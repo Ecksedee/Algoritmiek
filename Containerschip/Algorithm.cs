@@ -57,7 +57,7 @@ namespace Containerschip.Models
                 int nextSpot = freighter.GetNextAvailableSpot(length, height, order);
                 while (nextSpot == -1)
                 {
-                    if ((length + 1 == freighter.Containers.GetLength(1) && !skipRow) || (length + 2 == freighter.Containers.GetLength(1) && skipRow))
+                    if ((length + 1 >= freighter.Containers.GetLength(1) && !skipRow) || (length + 2 >= freighter.Containers.GetLength(1) && skipRow))
                     {
                         if (height == freighter.Containers.GetLength(2) - 1)
                         {
@@ -72,7 +72,7 @@ namespace Containerschip.Models
                     }
                     else
                     {
-                        if (skipRow)
+                        if(skipRow)
                         {
                             length += 2;
                         }

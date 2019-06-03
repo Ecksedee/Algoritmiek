@@ -108,7 +108,7 @@ namespace Containerschip.Models
                         return x;  // De plek is vrij
                     }
                 }
-                else  //Hetzelfde maar van de andere kant beginnen
+                else  // Hetzelfde maar van de andere kant beginnen
                 {
                     if (Containers[x, length, height] == null
                     && (height == 0 || (Containers[x, length, height - 1] != null
@@ -135,6 +135,7 @@ namespace Containerschip.Models
         {
             double weightLeft = 0;
             double weightRight = 0;
+            double totalWeight = 0;
 
             for (int height = 0; height < Height; height++)
             {
@@ -145,19 +146,22 @@ namespace Containerschip.Models
                         if (Containers[width, length, height] != null && width < Width / 2)
                         {
                             weightLeft += Containers[width, length, height].Weight;
+                            totalWeight += Containers[width, length, height].Weight;
                         }
                         else if (Containers[width, length, height] != null && width >= Width / 2 && Width % 2 == 0)
                         {
                             weightRight += Containers[width, length, height].Weight;
+                            totalWeight += Containers[width, length, height].Weight; 
                         }
                         else if (Containers[width, length, height] != null && width > Width / 2)
                         {
                             weightRight += Containers[width, length, height].Weight;
+                            totalWeight += Containers[width, length, height].Weight;
                         }
                     }
                 }
             }
-            return (weightLeft - weightRight) / weightRight * 100;
+            return Math.Round(((weightLeft / totalWeight) - (weightRight / totalWeight)) * 100, 1);
         }
     }
 }

@@ -908,7 +908,7 @@ namespace ContainervervoerTest
                 unsortedContainers.Add(new Container(30000, standard));
             }
 
-            for (int i = 1; i < 26; i++)
+            for (int i = 1; i < 22; i++)
             {
                 unsortedContainers.Add(new Container(30000, valuable));
             }
