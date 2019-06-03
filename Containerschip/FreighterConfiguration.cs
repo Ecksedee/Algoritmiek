@@ -20,17 +20,16 @@ namespace Containerschip
                 int lengthInContainers = Convert.ToInt32(nudLengthInContainers.Value);
                 int widthInContainers = Convert.ToInt32(nudWidthInContainers.Value);
                 int heightInContainers = Convert.ToInt32(nudHeightInContainers.Value);
-                int loadCapacity = Convert.ToInt32(nudLoadCapacity.Value);
 
-                freighter = new Freighter(widthInContainers, lengthInContainers, heightInContainers, loadCapacity);
-
-                OpenContainerConfiguration();
+                freighter = new Freighter(widthInContainers, lengthInContainers, heightInContainers);
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc.Message);
                 MessageBox.Show("Something went wrong creating the freighter.");
             }
+
+            OpenContainerConfiguration();
         }
 
         private void OpenContainerConfiguration()

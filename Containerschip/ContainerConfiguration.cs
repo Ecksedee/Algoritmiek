@@ -36,7 +36,11 @@ namespace Containerschip
                     type = Models.Type.Valuable;
                 }
 
-                unsortedContainers.Add(new Container(containerWeight, type));
+                for (int i = 0; i < nudAmount.Value; i++)
+                {
+                    unsortedContainers.Add(new Container(containerWeight, type));
+                }
+
                 UpdateContainerListBox();
                 rtxLog.ForeColor = Color.Green;
                 rtxLog.Text = "Container added.";
@@ -92,14 +96,9 @@ namespace Containerschip
             rtxLog.ForeColor = Color.Green;
             rtxLog.Text = "Sorting the containers...";
 
-            if (freighter.CapacityExceedsWeightLimit())
-            {
-                freighter.LoadCapacity = freighter.MaximumWeight;
-            }
-
             Algorithm algorithm = new Algorithm(freighter);
             algorithm.Sort(unsortedContainers);
-
+            rtxLog.Text = String.Format("The containers have been sorted with a weight difference of {0}",freighter.Balance);
             //this.Hide();
             //FreighterVisual freighter1 = new FreighterVisual(freighter);
             //freighter1.ShowDialog();
@@ -120,6 +119,12 @@ namespace Containerschip
             lstContainers.Items.Clear();
             lstContainers.Items.AddRange(unsortedContainers.OrderBy(x => x.Type).ThenByDescending(o => o.Weight).ToArray());
             lblTotalWeight.Text = TotalContainersWeight().ToString();
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            unsortedContainers.Clear();
+            UpdateContainerListBox();
         }
     }
 }

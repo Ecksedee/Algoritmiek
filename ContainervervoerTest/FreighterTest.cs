@@ -10,17 +10,16 @@ namespace ContainervervoerTest
     public class FreighterTest
     {
         [TestMethod]
-        public void WeightExceedsLimits_WhenWeightDoesNotExceed_ReturnFalse()
+        public void WeightFailsLimits_WhenWeightDoesNotExceed_ReturnFalse()
         {
             // Arrange
             int freighterLength = 5;
             int freighterWidth = 3;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 47; i++)
             {
                 unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
             }
@@ -33,76 +32,13 @@ namespace ContainervervoerTest
         }
 
         [TestMethod]
-        public void WeightExceedsMaxWeight_WhenWeightExceedsLoadCapacity_ShouldThrowArgumentException()
-        {
-            // Arrange
-            int freighterLength = 5;
-            int freighterWidth = 3;
-            int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
-            List<Container> unsortedContainers = new List<Container>();
-
-            for (int i = 0; i < 31; i++)
-            {
-                unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
-            }
-
-            int totalContainerWeight = unsortedContainers.Sum(x => x.Weight);
-
-            // Act
-            try
-            {
-                freighter.WeightFailsLimits(unsortedContainers);
-            }
-            catch (ArgumentException exc)
-            {
-                // Assert
-
-                StringAssert.Contains(exc.Message, String.Format("The current weight of {0} kg exceeds the maximum load capacity of the freighter of {1} Kg", totalContainerWeight, freighter.LoadCapacity));
-            }
-        }
-
-        [TestMethod]
-        public void WeightExceedsMaxWeight_WhenWeightUnderCapacityOverMaxWeight_ShouldThrowArgumentException()
-        {
-            // Arrange
-            int freighterLength = 5;
-            int freighterWidth = 3;
-            int freighterHeight = 3;
-            int freighterLoadCapacity = 1500000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
-            List<Container> unsortedContainers = new List<Container>();
-
-            for (int i = 0; i < 24; i++)
-            {
-                unsortedContainers.Add(new Container(Container.MaxWeight, Containerschip.Models.Type.Standard));
-            }
-
-            int totalContainerWeight = unsortedContainers.Sum(x => x.Weight);
-
-            // Act
-            try
-            {
-                freighter.WeightFailsLimits(unsortedContainers);
-            }
-            catch (ArgumentException exc)
-            {
-                // Assert
-
-                StringAssert.Contains(exc.Message, String.Format("The current weight: {0} kg fails to reach the minimum amount of {1} kg required.", totalContainerWeight, freighter.MinimumWeight));
-            }
-        }
-
-        [TestMethod]
         public void SortCooledContainers_WhenContainersGiven_ShouldSortCooledContainers()
         {
             // Assert
             int freighterLength = 5;
             int freighterWidth = 5;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -153,8 +89,7 @@ namespace ContainervervoerTest
             int freighterLength = 5;
             int freighterWidth = 3;
             int freighterHeight = 10;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -200,8 +135,7 @@ namespace ContainervervoerTest
             int freighterLength = 5;
             int freighterWidth = 5;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -241,8 +175,7 @@ namespace ContainervervoerTest
             int freighterLength = 5;
             int freighterWidth = 5;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
 
             List<Container> unsortedCooledContainer = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
@@ -277,7 +210,7 @@ namespace ContainervervoerTest
         [TestMethod]
         public void GetNextAvailablePosition_ShouldReturnLocation()
         {
-            Freighter freighter = new Freighter(3, 5, 3, 900000);
+            Freighter freighter = new Freighter(3, 5, 3);
             Assert.AreEqual(2, freighter.GetNextAvailableSpot(0, 0, true));
 
             freighter.Containers[2, 0, 0] = new Container(10, Containerschip.Models.Type.Cooled);
@@ -308,8 +241,7 @@ namespace ContainervervoerTest
             int freighterLength = 5;
             int freighterWidth = 5;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
             var standard = Containerschip.Models.Type.Standard;
@@ -393,8 +325,7 @@ namespace ContainervervoerTest
             int freighterLength = 5;
             int freighterWidth = 5;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
             var standard = Containerschip.Models.Type.Standard;
@@ -488,8 +419,7 @@ namespace ContainervervoerTest
             int freighterLength = 5;
             int freighterWidth = 5;
             int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var cooled = Containerschip.Models.Type.Cooled;
             var standard = Containerschip.Models.Type.Standard;
@@ -574,8 +504,7 @@ namespace ContainervervoerTest
             const int freighterLength = 5;
             const int freighterWidth = 5;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var standard = Containerschip.Models.Type.Standard;
 
@@ -651,8 +580,7 @@ namespace ContainervervoerTest
             const int freighterLength = 5;
             const int freighterWidth = 5;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var valuable = Containerschip.Models.Type.Valuable;
 
@@ -728,8 +656,7 @@ namespace ContainervervoerTest
             const int freighterLength = 5;
             const int freighterWidth = 5;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var valuable = Containerschip.Models.Type.Valuable;
             var standard = Containerschip.Models.Type.Standard;
@@ -811,8 +738,7 @@ namespace ContainervervoerTest
             const int freighterLength = 5;
             const int freighterWidth = 5;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
 
 
             // Act
@@ -829,8 +755,7 @@ namespace ContainervervoerTest
             const int freighterLength = 5;
             const int freighterWidth = 5;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var valuable = Containerschip.Models.Type.Valuable;
             var standard = Containerschip.Models.Type.Standard;
@@ -898,8 +823,7 @@ namespace ContainervervoerTest
             const int freighterLength = 5;
             const int freighterWidth = 5;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
             List<Container> unsortedContainers = new List<Container>();
             var valuable = Containerschip.Models.Type.Valuable;
 
@@ -963,13 +887,62 @@ namespace ContainervervoerTest
         }
 
         [TestMethod]
-        public void CalculateBalance_WhenFreighterGiven_ShouldReturnBalance()
+        public void CalculateBalance_WhenEven_ShouldReturnBalance()
         {
             const int freighterLength = 5;
             const int freighterWidth = 4;
             const int freighterHeight = 3;
-            int freighterLoadCapacity = 900000;
-            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
+
+            var standard = Containerschip.Models.Type.Standard;
+
+            freighter.Containers = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null},
+                    {new Container(15000, standard), null, null}
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                }
+            };
+
+            // Act
+            double result = freighter.CalculateBalance();
+
+            // Assert
+            Assert.AreEqual(-5, result);
+        }
+
+        [TestMethod]
+        public void CalculateBalance_WhenUneven_ShouldReturnBalance()
+        {
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
+
             var standard = Containerschip.Models.Type.Standard;
 
             freighter.Containers = new Container[freighterWidth, freighterLength, freighterHeight]
@@ -1001,11 +974,18 @@ namespace ContainervervoerTest
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
                 }
             };
 
             // Act
-            double result = freighter.CalculateBalance(freighter.Containers);
+            double result = freighter.CalculateBalance();
 
             // Assert
             Assert.AreEqual(0, result);

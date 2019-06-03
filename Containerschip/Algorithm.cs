@@ -20,6 +20,7 @@ namespace Containerschip.Models
 
         public Container[,,] Sort(List<Container> _unsortedList)
         {
+            freighter.Containers = new Container[freighter.Width, freighter.Length, freighter.Height];
             unsortedList = _unsortedList;
             List<Container> cooledContainers = GetCooledContainers();
             List<Container> standardContainers = GetStandardContainers();
@@ -28,6 +29,8 @@ namespace Containerschip.Models
             SortCooledContainers(cooledContainers);
             SortStandardContainers(standardContainers);
             SortValuableContainers(valuableContainers);
+
+            freighter.Balance = freighter.CalculateBalance();
 
             return freighter.Containers;
         }
@@ -172,13 +175,20 @@ namespace Containerschip.Models
                     nextSpot = freighter.GetNextAvailableSpot(length, height, order);
                 }
 
-                if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                if (nextSpot != -1)
                 {
-                    freighter.Containers[nextSpot, length, height] = container;
+                    if (WeightOnTopOfLowest(nextSpot, length) + container.Weight < Container.MaxWeightOnTop)
+                    {
+                        freighter.Containers[nextSpot, length, height] = container;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                    }
                 }
                 else
                 {
-                    throw new ArgumentException("The containers could not be sorted because the maximum weight on top of one or more containers exceeds the limit of " + Container.MaxWeightOnTop + " kg");
+                    throw new ArgumentException("The containers could not be sorted because the ship is full!");
                 }
             }
             return freighter.Containers;

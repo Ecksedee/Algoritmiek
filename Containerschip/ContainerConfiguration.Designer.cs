@@ -38,19 +38,25 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rtxLog = new System.Windows.Forms.RichTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblTotalWeight = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnRemoveContainer = new System.Windows.Forms.Button();
             this.lstContainers = new System.Windows.Forms.ListBox();
             this.btnStartSorting = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblTotalWeight = new System.Windows.Forms.Label();
+            this.nudAmount = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnClear = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudContainerWeight)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.nudAmount);
             this.groupBox1.Controls.Add(this.rdoCooled);
             this.groupBox1.Controls.Add(this.rdoValuable);
             this.groupBox1.Controls.Add(this.rdoStandard);
@@ -158,16 +164,35 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnClear);
             this.groupBox3.Controls.Add(this.lblTotalWeight);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnRemoveContainer);
             this.groupBox3.Controls.Add(this.lstContainers);
             this.groupBox3.Location = new System.Drawing.Point(268, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(243, 197);
+            this.groupBox3.Size = new System.Drawing.Size(243, 230);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Containers";
+            // 
+            // lblTotalWeight
+            // 
+            this.lblTotalWeight.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lblTotalWeight.AutoSize = true;
+            this.lblTotalWeight.Location = new System.Drawing.Point(70, 168);
+            this.lblTotalWeight.Name = "lblTotalWeight";
+            this.lblTotalWeight.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalWeight.TabIndex = 18;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 168);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Total weight:";
             // 
             // btnRemoveContainer
             // 
@@ -199,23 +224,42 @@
             this.btnStartSorting.UseVisualStyleBackColor = true;
             this.btnStartSorting.Click += new System.EventHandler(this.BtnStartSorting_Click);
             // 
-            // label2
+            // nudAmount
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 168);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 13);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Total weight:";
+            this.nudAmount.Location = new System.Drawing.Point(151, 49);
+            this.nudAmount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudAmount.Name = "nudAmount";
+            this.nudAmount.Size = new System.Drawing.Size(65, 20);
+            this.nudAmount.TabIndex = 15;
+            this.nudAmount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // lblTotalWeight
+            // label3
             // 
-            this.lblTotalWeight.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.lblTotalWeight.AutoSize = true;
-            this.lblTotalWeight.Location = new System.Drawing.Point(70, 168);
-            this.lblTotalWeight.Name = "lblTotalWeight";
-            this.lblTotalWeight.Size = new System.Drawing.Size(0, 13);
-            this.lblTotalWeight.TabIndex = 18;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(129, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Amount of containers:";
+            // 
+            // btnClear
+            // 
+            this.btnClear.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.btnClear.Location = new System.Drawing.Point(132, 193);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(105, 31);
+            this.btnClear.TabIndex = 19;
+            this.btnClear.Text = "Clear List";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // ContainerConfiguration
             // 
@@ -236,6 +280,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAmount)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -257,5 +302,8 @@
         private System.Windows.Forms.Button btnRemoveContainer;
         private System.Windows.Forms.Label lblTotalWeight;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown nudAmount;
+        private System.Windows.Forms.Button btnClear;
     }
 }
