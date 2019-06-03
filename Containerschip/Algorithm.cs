@@ -55,7 +55,7 @@ namespace Containerschip.Models
             foreach (Container container in valuableContainers)
             {
                 int nextSpot = freighter.GetNextAvailableSpot(length, height, order);
-                if (nextSpot == -1)
+                while (nextSpot == -1)
                 {
                     if (length == freighter.Containers.GetLength(1) - 1)
                     {
@@ -129,7 +129,7 @@ namespace Containerschip.Models
             foreach (Container container in cooledContainers)
             {
                 int nextSpot = freighter.GetNextAvailableSpot(0, height, order);
-                if (nextSpot == -1)
+                while (nextSpot == -1)
                 {
                     height++;
                     order = !order;
@@ -159,7 +159,7 @@ namespace Containerschip.Models
             foreach (Container container in standardContainers)
             {
                 int nextSpot = freighter.GetNextAvailableSpot(length, height, order);
-                if (nextSpot == -1)
+                while (nextSpot == -1)
                 {
                     if (length == freighter.Containers.GetLength(1) - 1)
                     {

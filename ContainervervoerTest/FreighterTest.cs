@@ -834,7 +834,7 @@ namespace ContainervervoerTest
             Container[,,] expectedContainersSorted = new Container[freighterWidth, freighterLength, freighterHeight]
             {
                 {
-                    { new Container(30000, standard), new Container(30000, valuable), null},
+                    { new Container(30000, standard), null, null},
                     { new Container(30000, standard), null, null},
                     { new Container(30000, standard), null, null},
                     { new Container(30000, standard), null, null},
@@ -855,14 +855,14 @@ namespace ContainervervoerTest
                     { new Container(30000, standard), null, null }
                 },
                 {
-                    { new Container(2000, standard), null, null },
+                    { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null }
                 },
                 {
-                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard),  new Container(30000, valuable), null },
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null },
                     { new Container(30000, standard), null, null },
