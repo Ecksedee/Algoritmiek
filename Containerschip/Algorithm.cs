@@ -32,7 +32,7 @@ namespace Containerschip.Models
 
             freighter.Balance = freighter.CalculateBalance();
 
-            if (freighter.Balance <= -20 && freighter.Balance >= 20)
+            if (freighter.Balance >= -20 && freighter.Balance <= 20)
             {
                 return freighter.Containers;
             }

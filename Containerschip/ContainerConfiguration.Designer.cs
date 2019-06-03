@@ -46,6 +46,7 @@
             this.nudAmount = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
+            this.chkRandomize = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudContainerWeight)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -55,6 +56,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkRandomize);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.nudAmount);
             this.groupBox1.Controls.Add(this.rdoCooled);
@@ -65,7 +67,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 167);
+            this.groupBox1.Size = new System.Drawing.Size(250, 187);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add Container";
@@ -73,7 +75,7 @@
             // rdoCooled
             // 
             this.rdoCooled.AutoSize = true;
-            this.rdoCooled.Location = new System.Drawing.Point(9, 130);
+            this.rdoCooled.Location = new System.Drawing.Point(9, 153);
             this.rdoCooled.Name = "rdoCooled";
             this.rdoCooled.Size = new System.Drawing.Size(58, 17);
             this.rdoCooled.TabIndex = 14;
@@ -83,7 +85,7 @@
             // rdoValuable
             // 
             this.rdoValuable.AutoSize = true;
-            this.rdoValuable.Location = new System.Drawing.Point(9, 107);
+            this.rdoValuable.Location = new System.Drawing.Point(9, 130);
             this.rdoValuable.Name = "rdoValuable";
             this.rdoValuable.Size = new System.Drawing.Size(66, 17);
             this.rdoValuable.TabIndex = 13;
@@ -94,7 +96,7 @@
             // 
             this.rdoStandard.AutoSize = true;
             this.rdoStandard.Checked = true;
-            this.rdoStandard.Location = new System.Drawing.Point(9, 84);
+            this.rdoStandard.Location = new System.Drawing.Point(9, 107);
             this.rdoStandard.Name = "rdoStandard";
             this.rdoStandard.Size = new System.Drawing.Size(68, 17);
             this.rdoStandard.TabIndex = 12;
@@ -261,6 +263,17 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
+            // chkRandomize
+            // 
+            this.chkRandomize.AutoSize = true;
+            this.chkRandomize.Location = new System.Drawing.Point(9, 75);
+            this.chkRandomize.Name = "chkRandomize";
+            this.chkRandomize.Size = new System.Drawing.Size(113, 17);
+            this.chkRandomize.TabIndex = 17;
+            this.chkRandomize.Text = "Randomize weight";
+            this.chkRandomize.UseVisualStyleBackColor = true;
+            this.chkRandomize.CheckedChanged += new System.EventHandler(this.ChkRandomize_CheckedChanged);
+            // 
             // ContainerConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,5 +318,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudAmount;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.CheckBox chkRandomize;
     }
 }

@@ -26,6 +26,7 @@ namespace Containerschip
             {
                 int containerWeight = Convert.ToInt32(nudContainerWeight.Value);
                 var type = Models.Type.Standard;
+                Random r = new Random();
 
                 if (rdoCooled.Checked)
                 {
@@ -38,7 +39,14 @@ namespace Containerschip
 
                 for (int i = 0; i < nudAmount.Value; i++)
                 {
-                    unsortedContainers.Add(new Container(containerWeight, type));
+                    if (chkRandomize.Checked)
+                    {
+                        unsortedContainers.Add(new Container(r.Next(4000, 30000), type));
+                    }
+                    else
+                    {
+                        unsortedContainers.Add(new Container(containerWeight, type));
+                    }
                 }
 
                 UpdateContainerListBox();
@@ -125,6 +133,11 @@ namespace Containerschip
         {
             unsortedContainers.Clear();
             UpdateContainerListBox();
+        }
+
+        private void ChkRandomize_CheckedChanged(object sender, EventArgs e)
+        {
+            nudContainerWeight.Enabled = !nudContainerWeight.Enabled;
         }
     }
 }
