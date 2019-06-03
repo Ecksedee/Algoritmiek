@@ -179,7 +179,7 @@ namespace Containerschip.Models
                 {
                     for (int length = 0; length < Length; length++)
                     {
-                        for (int width = 0; width < Width / 2 - 0.5; width++)
+                        for (int width = 0; width < Width / 2; width++)
                         {
                             if (Containers[width, length, height] == null)
                             {
@@ -190,15 +190,15 @@ namespace Containerschip.Models
                                 weightLeft += Containers[width, length, height].Weight;
                             }
                         }
-                        for (double width = (double)Width / 2 + 0.5; width < Width; width++)
+                        for (int width = Width / 2 + 1; width < Width; width++)
                         {
-                            if (Containers[(int)width, length, height] == null)
+                            if (Containers[width, length, height] == null)
                             {
                                 weightRight += 0;
                             }
                             else
                             {
-                                weightRight += Containers[(int)width, length, height].Weight;
+                                weightRight += Containers[width, length, height].Weight;
                             }
                         }
                     }

@@ -100,7 +100,7 @@ namespace Containerschip.Models
                 }
                 else
                 {
-                    throw new ArgumentException("The containers could not be sorted because the ship is full!");
+                    throw new ArgumentException("There's not enough space for the valuable containers");
                 }
 
             }
@@ -188,7 +188,7 @@ namespace Containerschip.Models
                 }
                 else
                 {
-                    throw new ArgumentException("The containers could not be sorted because the ship is full!");
+                    throw new ArgumentException("The height needed to sort the standard containers exceeds the maximum height of the ship");
                 }
             }
             return freighter.Containers;
