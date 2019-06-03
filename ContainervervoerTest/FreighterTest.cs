@@ -811,5 +811,84 @@ namespace ContainervervoerTest
             // Assert
             Assert.AreEqual(0, result);
         }
+
+        [TestMethod]
+        public void Sort_ValuableOnTopOfLayerStandard_ShouldSortValuable()
+        {
+            // Arrange
+            const int freighterLength = 5;
+            const int freighterWidth = 5;
+            const int freighterHeight = 3;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight);
+            List<Container> unsortedContainers = new List<Container>();
+            var valuable = Containerschip.Models.Type.Valuable;
+            var standard = Containerschip.Models.Type.Standard;
+
+            unsortedContainers.Add(new Container(30000, valuable));
+
+            for (int i = 1; i < 26; i++)
+            {
+                unsortedContainers.Add(new Container(30000, standard));
+            }
+
+            Container[,,] expectedContainersSorted = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    { new Container(30000, standard), new Container(30000, valuable), null},
+                    { new Container(30000, standard), null, null},
+                    { new Container(30000, standard), null, null},
+                    { new Container(30000, standard), null, null},
+                    { new Container(30000, standard), null, null}
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(2000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                }
+            };
+
+            Algorithm algorithm = new Algorithm(freighter);
+
+            // Act
+            Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
+
+            // Assert
+            string expectedArrayToString = "";
+            foreach (var s in expectedContainersSorted.Cast<Container>())
+            {
+                expectedArrayToString += s;
+            }
+
+            string actualArrayToString = "";
+            foreach (var s in actualContainersSorted.Cast<Container>())
+            {
+                actualArrayToString += s;
+            }
+
+            Assert.AreEqual(expectedArrayToString, actualArrayToString);
+        }
     }
 }
