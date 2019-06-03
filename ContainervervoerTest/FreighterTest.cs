@@ -961,5 +961,54 @@ namespace ContainervervoerTest
             }
 
         }
+
+        [TestMethod]
+        public void CalculateBalance_WhenFreighterGiven_ShouldReturnBalance()
+        {
+            const int freighterLength = 5;
+            const int freighterWidth = 4;
+            const int freighterHeight = 3;
+            int freighterLoadCapacity = 900000;
+            Freighter freighter = new Freighter(freighterWidth, freighterLength, freighterHeight, freighterLoadCapacity);
+            var standard = Containerschip.Models.Type.Standard;
+
+            freighter.Containers = new Container[freighterWidth, freighterLength, freighterHeight]
+            {
+                {
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null},
+                    {new Container(30000, standard), null, null}
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                },
+                {
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null },
+                    { new Container(30000, standard), null, null }
+                }
+            };
+
+            // Act
+            double result = freighter.CalculateBalance(freighter.Containers);
+
+            // Assert
+            Assert.AreEqual(0, result);
+        }
     }
 }

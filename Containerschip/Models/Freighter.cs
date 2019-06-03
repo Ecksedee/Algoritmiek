@@ -154,5 +154,52 @@ namespace Containerschip.Models
             }
             return -1;
         }
+
+        public double CalculateBalance(Container[,,] _containers)
+        {
+            Container[,,] containers = _containers;
+
+            double weightLeft = 0;
+            double weightRight = 0;
+            double weightDifference = 0;
+
+            if (Width % 2 == 0) // Width is even
+            {
+                for (int height = 0; height < Height; height++)
+                {
+                    for (int length = 0; length < Length; length++)
+                    {
+                        for (int width = 0; width < Width / 2; width++)
+                        {
+                            weightLeft += containers[width, length, height].Weight;
+                        }
+                        for (int width = Width / 2; width < Width; width++)
+                        {
+                            weightRight += containers[width, length, height].Weight;
+                        }
+                    }
+                }
+                weightDifference = (weightLeft - weightRight) / weightRight * 100;
+            }
+            else // Width is uneven
+            {
+                for (int height = 0; height < Height; height++)
+                {
+                    for (int length = 0; length < Length; length++)
+                    {
+                        for (int width = 0; width < Width / 2 - 0.5; width++)
+                        {
+                            weightLeft += containers[width, length, height].Weight;
+                        }
+                        for (double width = Width / 2 + 0.5; width < Width / 2; width++)
+                        {
+                            weightRight += containers[(int)width, length, height].Weight;
+                        }
+                    }
+                }
+                weightDifference = (weightLeft - weightRight) / weightRight * 100;
+            }
+            return weightDifference;
+        }
     }
 }
