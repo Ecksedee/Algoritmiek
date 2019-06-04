@@ -753,7 +753,7 @@ namespace ContainervervoerTest
             double result = freighter.CalculateBalance();
 
             // Assert
-            Assert.AreEqual(-5, result);
+            Assert.AreEqual(-2.6, result);
         }
 
         [TestMethod]
@@ -918,12 +918,12 @@ namespace ContainervervoerTest
             try
             {
                 // Act
-                Container[,,] actualContainersSorted = algorithm.Sort(unsortedContainers);
+                algorithm.Sort(unsortedContainers);
             }
             catch (ArgumentException exc)
             {
                 // Assert
-                Assert.AreEqual("The valuable containers could not be sorted because the ship is full!", exc.Message);
+                Assert.AreEqual("The height needed to sort the valuable containers exceeds the maximum height of the ship", exc.Message);
             }
         }
     }

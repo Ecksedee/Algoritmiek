@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Containervervoer", "Containerschip\Containervervoer.csproj", "{189BBB0C-1EE8-4B09-A73B-F79C991B34E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainervervoerTest", "ContainervervoerTest\ContainervervoerTest.csproj", "{80F5E580-1F92-42D0-A0B1-24BC875467FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContainervervoerTest", "ContainervervoerTest\ContainervervoerTest.csproj", "{80F5E580-1F92-42D0-A0B1-24BC875467FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Circustrein", "..\AlgoritmiekCode\Circustrein\Circustrein.csproj", "{0961B448-A730-40E9-917B-0A085E674D45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{80F5E580-1F92-42D0-A0B1-24BC875467FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F5E580-1F92-42D0-A0B1-24BC875467FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F5E580-1F92-42D0-A0B1-24BC875467FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0961B448-A730-40E9-917B-0A085E674D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0961B448-A730-40E9-917B-0A085E674D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0961B448-A730-40E9-917B-0A085E674D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0961B448-A730-40E9-917B-0A085E674D45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

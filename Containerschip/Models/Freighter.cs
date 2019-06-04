@@ -89,21 +89,19 @@ namespace Containerschip.Models
             return false;
         }
 
-        public int GetNextAvailableSpot(int length, int height, bool rightToLeft)
+        public int GetNextAvailableSpot(int length, int height, bool leftToRight)
         {
             for (int x = 0; x < Width; x++) //Voor de hele breedte
             {
-                if (rightToLeft) // Boolean bepaalt waar eerst gekeken wordt
+                if (leftToRight) // Boolean bepaalt waar eerst gekeken wordt
                 {
                     if (Containers[(Width - 1) - x, length, height] == null // Als er op de uiterste width (rechterkant) niks staat
-                    && (height == 0 || (Containers[(Width - 1) - x, length, height - 1] != null // EN het is de eerste laag OF er staat iets onder 
-                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) // EN de container eronder is niet valuable
+                    && (height == 0 || (Containers[(Width - 1) - x, length, height - 1] != null && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) // EN de container eronder is niet valuable
                     {
                         return (Width - 1) - x; // De plek is vrij
                     }
                     else if (Containers[x, length, height] == null // Anders als er op de andere uiterste kant niks staat
-                    && (height == 0 || (Containers[x, length, height - 1] != null // EN het is de eerste laag OF er staat iets onder
-                    && Containers[x, length, height - 1].Type != Type.Valuable))) // EN de container eronder is niet valuable
+                    && (height == 0 || (Containers[x, length, height - 1] != null && Containers[x, length, height - 1].Type != Type.Valuable))) // EN de container eronder is niet valuable
                     {
                         return x;  // De plek is vrij
                     }
@@ -111,14 +109,12 @@ namespace Containerschip.Models
                 else  // Hetzelfde maar van de andere kant beginnen
                 {
                     if (Containers[x, length, height] == null
-                    && (height == 0 || (Containers[x, length, height - 1] != null
-                    && Containers[x, length, height - 1].Type != Type.Valuable))) 
+                    && (height == 0 || (Containers[x, length, height - 1] != null && Containers[x, length, height - 1].Type != Type.Valuable))) 
                     {
                         return x;
                     }
                     else if (Containers[(Width - 1) - x, length, height] == null
-                    && (height == 0 || (Containers[(Width - 1) - x, length, height - 1] != null
-                    && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) 
+                    && (height == 0 || (Containers[(Width - 1) - x, length, height - 1] != null && Containers[(Width - 1) - x, length, height - 1].Type != Type.Valuable))) 
                     {
                         return (Width - 1) - x;
                     }
@@ -141,19 +137,19 @@ namespace Containerschip.Models
             {
                 for (int length = 0; length < Length; length++)
                 {
-                    for (int width = 0; width < Width; width++)
+                    for (int width = 0; width < Width; width++) // Door alle vakken iteraten
                     {
-                        if (Containers[width, length, height] != null && width < Width / 2)
-                        {
+                        if (Containers[width, length, height] != null && width < Width / 2) // != null check zodat hij lege containers niet mee neemt
+                        {                                                                   // en width kleiner dan de helft voor 1 helft
                             weightLeft += Containers[width, length, height].Weight;
                             totalWeight += Containers[width, length, height].Weight;
                         }
-                        else if (Containers[width, length, height] != null && width >= Width / 2 && Width % 2 == 0)
+                        else if (Containers[width, length, height] != null && width >= Width / 2 && Width % 2 == 0) // width groter of gelijk dan de helft als het even is
                         {
                             weightRight += Containers[width, length, height].Weight;
-                            totalWeight += Containers[width, length, height].Weight; 
+                            totalWeight += Containers[width, length, height].Weight;
                         }
-                        else if (Containers[width, length, height] != null && width > Width / 2)
+                        else if (Containers[width, length, height] != null && width > Width / 2) // Width groter dan de helft als het oneven is
                         {
                             weightRight += Containers[width, length, height].Weight;
                             totalWeight += Containers[width, length, height].Weight;
